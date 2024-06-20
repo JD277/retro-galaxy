@@ -1,4 +1,0 @@
-Las dimensiones de la ventana son 1080 de ancho y 720 de alto, 
-las imagenes de los fondos deben tener las mismas medidas.
-
-En cuanto a los inconos de los juegos deben ser de 400 X 400
