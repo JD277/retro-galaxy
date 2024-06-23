@@ -5,10 +5,15 @@ pygame.display.set_caption("Retro Galaxy")
 pygame.init()
 running = True
 class Button_game:
-    def __init__(self,img, title="lorem   ipsum", x=0, y=0):
+    def __init__(self,img, title="lorem   ipsum", x=0, y=0, xt=0, yt=0, color1 =(255,255,255), color2=(255,255,255), size=16):
+        # Button label
+        self.color1 = color1
+        self.color2 = color2
         self.title = title
-        
+        self.xt = xt
+        self.yt = yt
         self.click = False
+        self.size = size
 
         self.X_POS = x
         self.Y_POS = y
@@ -42,8 +47,10 @@ class Button_game:
     def draw(self):
         global screen
         screen.blit(self.btn_surf, self.BTN_RECT)
-        #if self.title != "lorem   ipsum":
-        #   self.CREATE_TEXT
+        if self.title != " " or self.title != "lorem  ipsum":
+          self.CREATE_TEXT(self.size,self.xt, self.yt, self.title, 1)
+
+
 
         
 class Interface:
@@ -87,6 +94,15 @@ class Interface:
         self.wirect = pygame.Surface.get_rect(self.wicon,center = (540,330))
         self.wclose = Button_game("../retro-galaxy/src/buttons/cancel.png","",890,220)
         self.wstate = False
+        
+        # Menu btn
+        self.menu_btn = Button_game("../retro-galaxy/src/buttons/neptuno.png","Menu",994,30,1004,94)
+        self.mstate = False
+
+        # Game btn
+        self.game_btn = Button_game("../retro-galaxy/src/buttons/btn.png","Start",770,440,790,445,size= 25)
+        self.gstate = False
+
     # Function to create dynamic text
     def CREATE_TEXT (self, size, pos_x, pos_y, text, bold=0,):
         # text variables
@@ -104,15 +120,14 @@ class Interface:
         self.TEXT_RECT = pygame.Surface.get_rect(self.TEXT_SURF, topleft =(X_TEXT,Y_TEXT))
         screen.blit(self.TEXT_SURF, self.TEXT_RECT)
     
+    
     # Click event for soon btns
     def soon (self):
         for j in range(self.btn_num):
             self.btn[j].btn_is_press()
             if self.btn[j].click:
                 self.wstate = True
-                return True
-            else: 
-                return False
+            
             
     # Warning window
     def window (self):
@@ -127,10 +142,22 @@ class Interface:
         if self.wclose.click:
             self.wstate = False
 
+    def back_menu(self):
+        self.menu_btn.btn_is_press()  
+        if self.menu_btn.click:
+            self.mstate = True
+
+    def start_game(self):
+        self.game_btn.btn_is_press()  
+        if self.game_btn.click:
+            self.gstate = True
+
     # Draw the interface
     def draw(self):
         global screen
-        if self.soon() == False and self.wstate == False:
+        self.soon()
+        # Normal Interface 
+        if  self.wstate == False and self.mstate == False and self.gstate == False:
             screen.blit(self.bg_surf, self.BG_RECT)
             screen.blit(self.gicon_surf, self.GI_RECT)
             self.CREATE_TEXT(50,50,200, self.title,1)
@@ -140,7 +167,13 @@ class Interface:
                 value += 25
             for i in range(self.btn_num):
                 self.btn[i].draw()
-        elif self.wstate:
+            self.menu_btn.draw()
+            self.back_menu()
+            self.game_btn.draw()
+            self.start_game()
+
+        # Interface with the waning window 
+        elif self.wstate and self.mstate == False and self.gstate == False:
             screen.blit(self.bg_surf, self.BG_RECT)
             screen.blit(self.gicon_surf, self.GI_RECT)
             self.CREATE_TEXT(50,50,200, self.title,1)
@@ -150,8 +183,11 @@ class Interface:
                 value += 25
             for i in range(self.btn_num):
                 self.btn[i].draw()
+            self.game_btn.draw()
             self.window()
             self.wclose_warning()
+            self.menu_btn.draw()
+
 
 
 
@@ -160,7 +196,7 @@ bg_image_path = "../retro-galaxy/src/backgrounds/travel-bg.jpeg"
 game_icon_path = "../retro-galaxy/src/sprites/navecita.png"
 x = 0
 y = 0
-title = "Travel"
+title = "Galactic Travel"
 color_title = (255,255,255)
 color_text = (255,255,255)
 
