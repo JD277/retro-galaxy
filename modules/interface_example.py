@@ -1,9 +1,5 @@
 # Importing lib
-import pygame 
-screen = pygame.display.set_mode((1080, 720))
-pygame.display.set_caption("Retro Galaxy")
-pygame.init()
-running = True
+from global_variables import screen, running, pygame
 class Button_game:
     def __init__(self,img, title="lorem   ipsum", x=0, y=0, xt=0, yt=0, color1 =(255,255,255), color2=(255,255,255), size=16):
         # Button label
@@ -215,12 +211,12 @@ menu_icon = "../retro-galaxy/src/buttons/neptuno.png"
 travel = Interface(menu_icon, bg_image_path, game_icon_path, x, y,title, paragraph, color_title, color_text)
 
 
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+# while running:
+#      for event in pygame.event.get():
+#          if event.type == pygame.QUIT:
+#              running = False
 
-    travel.draw()
+#      travel.draw()
     
-    pygame.display.update()
+#      pygame.display.update()
 
