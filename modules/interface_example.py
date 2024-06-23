@@ -55,7 +55,7 @@ class Button_game:
         
 class Interface:
     # Define the constructor function for the class
-    def __init__(self, img, img_icon, x, y, title, description =["Lorem ipsum"], color1 =(255,255,255), color2=(255,255,255), wimg="../retro-galaxy/src/buttons/warning-btn.png", wicon="../retro-galaxy/src/buttons/clock-icon.png"):
+    def __init__(self, micon, img, img_icon, x, y, title, description =["Lorem ipsum"], color1 =(255,255,255), color2=(255,255,255), wimg="../retro-galaxy/src/buttons/warning-btn.png", wicon="../retro-galaxy/src/buttons/clock-icon.png"):
         
         # btn stuff
         self.btn = []
@@ -96,7 +96,8 @@ class Interface:
         self.wstate = False
         
         # Menu btn
-        self.menu_btn = Button_game("../retro-galaxy/src/buttons/neptuno.png","Menu",994,30,1004,94)
+        self.menu_icon = micon
+        self.menu_btn = Button_game(self.menu_icon,"Menu",994,30,1004,94)
         self.mstate = False
 
         # Game btn
@@ -208,8 +209,10 @@ paragraph = [
     "cumplir  la  misión  de  crear  un  mapa  de  la",
     "Galaxia.  Suerte  soldado!!"
 ]
+
+menu_icon = "../retro-galaxy/src/buttons/neptuno.png"
 # Making the instance for the class interface 
-travel = Interface(bg_image_path, game_icon_path, x, y,title, paragraph, color_title, color_text)
+travel = Interface(menu_icon, bg_image_path, game_icon_path, x, y,title, paragraph, color_title, color_text)
 
 
 while running:

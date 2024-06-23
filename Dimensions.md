@@ -4,13 +4,20 @@ Vas a abrir el archivo de ejemplo para ver los parametros que tienes que ponener
 #### OJO NO MODIFICAR LA CLASE INTERFAZ
 
 # Dimensiones para los elementos del juego
-- Las dimensiones de la ventana son 1080 de ancho y 720 de alto, 
+- Las dimensiones de la ventana son 1080 de ancho y 720 de alto.
+
 - las imagenes de los fondos deben tener las mismas medidas.
 
-- En cuanto a los inconos de los juegos deben ser de 400 X 400
+- En cuanto a los inconos de los juegos deben ser de 400 X 400.
 
-- La imagen de fondo para el warning debe ser de 800 x 300
+- La imagen de fondo para el warning debe ser de 800 x 300.
 
-- El icono de la ventana warning debe ser de 128x128
+- El icono de la ventana warning debe ser de 128x128.
 
-- El boton para cerrar la ventana warning debe ser de 32x32
+- El boton para cerrar la ventana warning debe ser de 32x32.
+
+- El boton de menu es personalizable pero debe tener 64x64.
+
+link del boton del menu:
+https://www.flaticon.es/icono-gratis/venus_3594270?term=planet&page=1&position=13&origin=search&related_id=3594270
+
