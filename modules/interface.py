@@ -185,38 +185,3 @@ class Interface:
             self.wclose_warning()
             self.menu_btn.draw()
 
-
-
-
-# Class arguments
-bg_image_path = "../retro-galaxy/src/backgrounds/travel-bg.jpeg"
-game_icon_path = "../retro-galaxy/src/sprites/navecita.png"
-x = 0
-y = 0
-title = "Galactic Travel"
-color_title = (255,255,255)
-color_text = (255,255,255)
-
-# Element to create the paragraph, because pygame does not support paragraphs
-paragraph = [
-    "Travel  es  un  juego  basado  en  Flappy  bird",
-    "el  cual  consiste  en  explorar  el  inhospito",
-    "Neptuno  esquivando  los  asteroides  para",
-    "cumplir  la  misión  de  crear  un  mapa  de  la",
-    "Galaxia.  Suerte  soldado!!"
-]
-
-menu_icon = "../retro-galaxy/src/buttons/neptuno.png"
-# Making the instance for the class interface 
-travel = Interface(menu_icon, bg_image_path, game_icon_path, x, y,title, paragraph, color_title, color_text)
-
-
-while running:
-      for event in pygame.event.get():
-          if event.type == pygame.QUIT:
-              running = False
-
-      travel.draw()
-    
-      pygame.display.update()
-
