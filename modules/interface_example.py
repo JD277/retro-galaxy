@@ -212,11 +212,12 @@ travel = Interface(menu_icon, bg_image_path, game_icon_path, x, y,title, paragra
 
 
 while running:
-      for event in pygame.event.get():
-          if event.type == pygame.QUIT:
-              running = False
-
-      travel.draw()
     
-      pygame.display.update()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    
+    travel.draw()
+    
+    pygame.display.update()
 
