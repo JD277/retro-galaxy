@@ -1,12 +1,28 @@
 from global_variables import screen, running, pygame
-from interface_example import Button_game 
 
-class intro(): 
-    def __init__(self, x, y, img, xt, yt, title, size):
+#Defining variables
+counter = 0
+ggg = pygame.key.get_focused()
+condition = False
+end = False
+background = pygame.transform.scale(pygame.image.load('../retro-galaxy/src/backgrounds/intro-galaxy.png'),(1080,720))
+description = [
+    'Objetos y Abstraccion de datos',
+    'Seccion 01',
+]
+
+class intro: 
+    def __init__(self, x, y, img, xt, yt, title, size, scale, scale_x = 0, scale_y = 0):
         # Logo variables
         self.x = x
         self.y = y
-        self.logo = pygame.image.load(img)
+
+        if scale == True:
+            self.logo = pygame.transform.scale(pygame.image.load(img), (scale_x, scale_y))
+
+        if scale == False:
+            self.logo = pygame.image.load(img)
+
         self.RECT = pygame.Surface.get_rect(self.logo,center = (self.x, self.y))
 
         # Text label
@@ -16,31 +32,52 @@ class intro():
         self.click = False
         self.size = size
 
-
-    def CREATE_TEXT (self, size, pos_x, pos_y, text):
-        # text variables
-        text_content = text
-        text_font = pygame.font.Font("../retro-galaxy/src/fonts/font2.ttf", size)
-        self.TEXT_SURF = text_font.render(text_content, True, "#000000")
-        
-        X_TEXT = pos_x
-        Y_TEXT = pos_y
-        self.TEXT_RECT = pygame.Surface.get_rect(self.TEXT_SURF, topleft =(X_TEXT,Y_TEXT))
-        screen.blit(self.TEXT_SURF, self.TEXT_RECT)
-
     def draw(self):
         global screen
-        screen.fill("#ffffff")
         screen.blit(self.logo, self.RECT)
 
-intro1 = intro(512, 260, "../retro-galaxy/src/sprites/udo_logo.png")
+    def rect_draw(self, color, width, heigth):
+
+        self.rect = pygame.draw.rect(screen, color, pygame.Rect(self.xt,self.yt, width, heigth))
+
+class Message:
+    def __init__(self, text, x, y, font, size, color):
+        self.text = text
+        self.x = x
+        self.y = y
+        self.text_font = pygame.font.Font(font, size)
+        self.text_surf = self.text_font.render(text, True, color)
+        self.text_rect = pygame.Surface.get_rect(self.text_surf, topleft = (x,y))
+
+    def draw_text(self):
+        screen.blit(self.text_surf,self.text_rect)
+
+intro1 = intro(512, 260, "../retro-galaxy/src/sprites/udo_logo.png", 30, 30, 'UDO', 10, False)
+intro_load = intro(512, 480, "../retro-galaxy/src/sprites/rect.png", 213, 468, '2', 10, False)
+message1 = Message('Objetos y Abstraccion de datos', 3, 1, "../retro-galaxy/src/fonts/font1.otf", 15, 'white')
+message2 = Message('Seccion  01', 3, 20, "../retro-galaxy/src/fonts/font1.otf", 15, 'white')
 
 while running:
+
     for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN :
+            condition = True
         if event.type == pygame.QUIT:
             running = False
-
-    intro1.draw()
     
-    pygame.display.update()   
+    screen.blit(background,(0,0))
+    intro1.draw()
+    intro_load.draw()
+    message1.draw_text()
+    message2.draw_text()
+    intro_load.rect_draw('purple', 0 + counter, 24)
+
+    if condition == True and end == False:
+       counter += 0.15   
+    
+    if counter >= 598:
+        end = True
+    
+    pygame.display.flip()
+      
 pygame.quit()   
