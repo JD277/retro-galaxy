@@ -1,4 +1,6 @@
 from global_variables import screen, running, pygame
+from interface import Button_game 
+
 
 #Defining variables
 counter = 0
@@ -32,9 +34,23 @@ class intro:
         self.click = False
         self.size = size
 
+
+
+    def CREATE_TEXT (self, size, pos_x, pos_y, text):
+        # text variables
+        text_content = text
+        text_font = pygame.font.Font("../retro-galaxy/src/fonts/font1.otf", size)
+        self.TEXT_SURF = text_font.render(text_content, False, (0,0,0))
+        
+        X_TEXT = pos_x
+        Y_TEXT = pos_y
+        self.TEXT_RECT = pygame.Surface.get_rect(self.TEXT_SURF, topleft =(X_TEXT,Y_TEXT))
+        screen.blit(self.TEXT_SURF, self.TEXT_RECT)
+
     def draw(self):
         global screen
         screen.blit(self.logo, self.RECT)
+        self.CREATE_TEXT(self.size,self.xt, self.yt, self.title)
 
     def rect_draw(self, color, width, heigth):
 
