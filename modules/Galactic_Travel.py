@@ -1,14 +1,14 @@
-#Libraries
-import pygame
+# Libraries
+from global_variables import *
 import random
+from interface import Button_game
 
 pygame.init()
-screen = pygame.display.set_mode((800, 400))
 name = pygame.display.set_caption("Galactic Travel")
 clock = pygame.time.Clock()
-bg = pygame.transform.scale(pygame.image.load('../retro-galaxy/src/backgrounds/travel-bg.jpeg'),(800,400))
+bg = pygame.image.load('../retro-galaxy/src/backgrounds/travel-bg.jpeg')
 
-#Game variables
+# Game variables
 running = True
 dt = 0
 game_speed = 3
@@ -31,6 +31,14 @@ game_over_sfx = pygame.mixer.Sound('../retro-galaxy/src/sounds/Galactic-Travel/g
 crash_sfx = pygame.mixer.Sound('../retro-galaxy/src/sounds/Galactic-Travel/ovni_hit.wav')
 pass_asteroid = False
 
+x_sprites = [ "../retro-galaxy/src/buttons/x-btn.png", "../retro-galaxy/src/buttons/x-btn-press.png"]
+z_sprites = [ "../retro-galaxy/src/buttons/z-btn.png", "../retro-galaxy/src/buttons/z-btn-press.png"]
+
+button_x = Button_game(x_sprites[0]," ", 250,500)
+button_z = Button_game(z_sprites[0]," ", 650,500)
+button_x_pressed = Button_game(x_sprites[1]," ", 250,500)
+button_z_pressed = Button_game(z_sprites[1]," ", 650,500)
+
 class Ovni(pygame.sprite.Sprite):
     #Constructor function for the class
     def __init__(self, posicion, player_image):
@@ -47,17 +55,23 @@ class Ovni(pygame.sprite.Sprite):
         self.rect.center = self.pos_inicial
     
     def movimiento(self, keys):
+        global button_x, button_z, z_sprites
 
-        if keys[pygame.K_z] == False:
+        if button_z.click or keys[pygame.K_z] and self.pressed == False:
+          self.velocidad = -400
+          self.pressed = True  
+          
+
+        elif button_z.click == False and keys[pygame.K_z]== False: 
             self.pressed = False
 
-        if keys[pygame.K_z] and self.pressed == False:
-          self.velocidad = -400
-          self.pressed = True     
+        if keys[pygame.K_z]:
+            button_z_pressed.draw()
+            
 
     #Defines the movement of the playable character
     def posicion(self):
-
+        global game_over
         if game_over == False:
            self.movimiento(pygame.key.get_pressed()) 
 
@@ -90,17 +104,20 @@ class Ovni(pygame.sprite.Sprite):
             frequency -= 200
 
     def clear(self, keys, group = pygame.sprite.Group()):
-        global bombs
-
-        if keys[pygame.K_x] == False:
-            self.pressed2 = False
-
+        global bombs,button_x, x_sprites
         if keys[pygame.K_x] and self.pressed2 == False and bombs > 0:
           
           pygame.mixer.Sound.play(explosion)
           group.empty()
           self.pressed2 = True 
           bombs -= 1
+
+        if keys[pygame.K_x] == False: 
+            self.pressed2 = False
+        
+        if keys[pygame.K_x]:
+            button_x_pressed.draw()
+
     
     def collide(self, time):
 
@@ -113,9 +130,10 @@ class Ovni(pygame.sprite.Sprite):
     def lose(self):
         pygame.mixer.Sound.play(game_over_sfx)
         self.image = pygame.transform.flip(self.image, False, True)
-        global game_over 
+        global game_over, button_x, button_z, z_sprites, x_sprites
         game_over = True
         screen.blit(self.image, self.rect)
+
 
 class Message:
     def __init__(self, text, x, y, font, size, color):
@@ -152,66 +170,74 @@ class Obstaculos(pygame.sprite.Sprite):
            self.rect.topleft = [x,y]
 
     def update(self):
-        global game_speed
+        global game_speed, score
 
         self.rect.x -= game_speed
 
-        if self.rect.right < 0:
+        if self.rect.right < -20:
             self.kill()
+            score +=1
 
-jugador = Ovni((200,200),'../retro-galaxy/src/sprites/Galactic-Travel/ufo.png')
+
+jugador = Ovni((340,200),'../retro-galaxy/src/sprites/Galactic-Travel/ufo.png')
 asteroid_group = pygame.sprite.Group()
-start_text = Message('Presione Z para comenzar', 400, 150, '../retro-galaxy/src/fonts/font2.ttf', 40, 'white')
+start_text = Message('Presione Z para comenzar', 540, 150, '../retro-galaxy/src/fonts/font2.ttf', 40, 'white')
+
+label1 = Message("Saltar", 715,480,'../retro-galaxy/src/fonts/font2.ttf', 30, "white" )
+label2 = Message("Bomba", 315,480,'../retro-galaxy/src/fonts/font2.ttf', 30, "white" )
 
 
+restart = Message("¡Haz  perdido!", 540, 150,'../retro-galaxy/src/fonts/font1.otf', 40, "red")
+restart2 = Message("1.  Presiona  ESC  para  volver  al  menu  de  Neptuno", 540, 220,'../retro-galaxy/src/fonts/font1.otf', 20, "white")
+restart3 = Message("2.  Presiona  SPACE  para  volver a  jugar", 540, 270,'../retro-galaxy/src/fonts/font1.otf', 20, "white")
 def galactic_travel():
-    global running, start, dt, frequency, last_asteroid, score, bombs, lifes, inv_frames, pass_asteroid
+    global running, start, dt, frequency, last_asteroid, score, bombs, lifes, inv_frames, pass_asteroid, button_x, button_z,game_over
 
     screen.blit(bg,(0,0))
-
     time = pygame.time.get_ticks()
+    button_x.draw()
+    button_z.draw()
+    label1.draw_text()
+    label2.draw_text()
 
     if start == False:
-
+        
         start_text.draw_text()
         check = pygame.key.get_pressed()
 
         if check[pygame.K_z]:
             start = True
     
-    score_show = Message(str(score), 40, 25, '../retro-galaxy/src/fonts/font1.otf', 40, (166,212,242))
+    score_show = Message(f"Score: {score}", 180, 25, '../retro-galaxy/src/fonts/font1.otf', 40, (166,212,242))
     score_show.draw_text()
 
-    bomb_numb = Message(str(bombs), 770, 25, '../retro-galaxy/src/fonts/font1.otf', 40, (127, 255, 212))
+    bomb_numb = Message(f"Bombs: {bombs}", 510, 25, '../retro-galaxy/src/fonts/font1.otf', 40, (127, 255, 212))
     bomb_numb.draw_text()
 
-    lifes_numb = Message(str(lifes), 710, 25, '../retro-galaxy/src/fonts/font1.otf', 40, (255, 49, 49))
+    lifes_numb = Message(f"Vidas: {lifes}", 850, 25, '../retro-galaxy/src/fonts/font1.otf', 40, (255, 49, 49))
     lifes_numb.draw_text()
 
     if start == True and game_over == False:
         
         pygame.mixer.music.unpause()
         jugador.score(score)
-
         #Generates more obstacles
         if time - last_asteroid > frequency:
 
-            asteroid_pos = random.randint(0, 300)
             asteroid_type = random.randint(1,3)
-            obstacle = Obstaculos('../retro-galaxy/src/sprites/Galactic-Travel/asteroid1.png', 800, 0 + asteroid_pos, asteroid_type )
+
+            if asteroid_type == 1:
+                 asteroid_pos = random.randint(0, 300)
+            
+            if asteroid_type == 2:
+                 asteroid_pos = random.randint(0, 250)
+            
+            if asteroid_type == 3:
+                 asteroid_pos = random.randint(0, 200)
+            
+            obstacle = Obstaculos('../retro-galaxy/src/sprites/Galactic-Travel/asteroid1.png', 1080, 0 + asteroid_pos, asteroid_type )
             asteroid_group.add(obstacle)
             last_asteroid = time
-
-        for i in range(0, len(asteroid_group)):
-
-            if jugador.rect.x > asteroid_group.sprites()[i].rect.left and jugador.rect.x < asteroid_group.sprites()[i].rect.right and pass_asteroid == False:  
-       
-                score += 1
-                pass_asteroid = True
-
-            if pass_asteroid == True and jugador.rect.x > asteroid_group.sprites()[i].rect.right:
-
-                pass_asteroid = False
         
         asteroid_group.update()
         
@@ -225,20 +251,39 @@ def galactic_travel():
         if lifes == 0 or jugador.rect.y > 420 or jugador.rect.y < -30:
             lifes = 0
             jugador.lose()
-            pygame.mixer.music.stop()
 
+            
+            pygame.mixer.music.stop()
         jugador.clear(pygame.key.get_pressed(), asteroid_group)
+        
+    else: 
+        restart.draw_text()
+        restart2.draw_text()
+        restart3.draw_text()
+
+
+    pygame.draw.line(screen, 'white',(0,430),(1080,430),5)
 
     pygame.display.flip()
     
     dt = clock.tick(60) / 1000
 
-while running:
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-    galactic_travel()
-
-pygame.quit()
+def new_game():
+    global running, start, dt, frequency, last_asteroid, score, bombs, lifes, inv_frames, pass_asteroid,game_over, milestone_lifes, milestone, milestone_speed, game_speed, jugador, asteroid_group
+    running = True
+    dt = 0
+    game_speed = 3
+    frequency = 2000
+    start = False
+    game_over = False
+    score = 0
+    bombs = 3
+    lifes = 3
+    inv_frames = 0
+    milestone = 1
+    milestone_lifes = 1
+    milestone_speed = 1
+    jugador = Ovni((340,200),'../retro-galaxy/src/sprites/Galactic-Travel/ufo.png')
+    asteroid_group = pygame.sprite.Group()
+    pygame.mixer.music.play(-1)
+    pygame.mixer.music.pause()

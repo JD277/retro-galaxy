@@ -13,7 +13,8 @@ class Button_game:
 
         self.X_POS = x
         self.Y_POS = y
-        self.btn_surf = pygame.image.load(img)
+        self.img = img
+        self.btn_surf = pygame.image.load(self.img)
         self.BTN_RECT = pygame.Surface.get_rect(self.btn_surf, topleft =(self.X_POS,self.Y_POS))
     # Function to create dynamic text
     def CREATE_TEXT (self, size, pos_x, pos_y, text, bold=0,):
