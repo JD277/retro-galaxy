@@ -48,9 +48,10 @@ def Pantalla_Juego():
     puntaje= fuente.render('Puntuacion: ' + str(puntuacion), 1, (255,255,255))
     Record= fuente.render('Record: ' + str(record), 1, (255,255,255))
     Pausa= fuente.render('PAUSA (presiona Tab para reanudar)', 1, (255,255,255))
+    volver= fuente.render('Presiona ESC para volver a Urano', 1, (255,255,255))
     Comenzar= fuente.render('Pulsa Enter para jugar', 1, (255,255,255))
     
-    jugador.dib(screen )
+    jugador.dib(screen)
 
         
     for b in disparoJugador:
@@ -72,10 +73,11 @@ def Pantalla_Juego():
         screen.blit(Pausa,(alto//2 - Pausa.get_width()//2, ancho//2 - Pausa.get_height()//2))    
     if finalizar and vidas==0:
        screen.blit(jugar_otra_vez, (alto//2 - jugar_otra_vez.get_width()//2, ancho//2 - jugar_otra_vez.get_height()//2))    
+       screen.blit(volver, (alto//2 - volver.get_width()//2, ancho//2 - jugar_otra_vez.get_height()//2+50))    
     if not comenzar:
         screen.blit(puntaje, (alto - puntaje.get_width() - 25, 25))
         screen.blit(textoV, (25,25)) 
-        screen.blit(Record, (ancho - Record.get_width() +25, 35 + puntaje.get_height()))   
+        screen.blit(Record, (ancho - Record.get_width() + 290, 35 + puntaje.get_height()))   
     
     pygame.display.update()
 
@@ -376,9 +378,9 @@ def asteroids():
                   
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
-            ejecutar=False   
+            gv.running=False   
         if event.type==pygame.KEYDOWN:
-            if event.key==pygame.K_ESCAPE:
+            if event.key==pygame.K_RSHIFT:
                 p=1
                 finalizar= True
                 
@@ -406,13 +408,3 @@ def asteroids():
                     puntuacion= 0
                        
     Pantalla_Juego()         
-
-while gv.running:
-    
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            gv.unning = False
-    
-    asteroids()
-    
-    pygame.display.update()
