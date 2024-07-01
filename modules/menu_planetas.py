@@ -41,7 +41,7 @@ def main_menu():
         jupiter = pygame.transform.scale(jupiter, (150, 150))
         saturno = pygame.image.load('../retro-galaxy/src/sprites/Menu/saturno.png')
         saturno = pygame.transform.scale(saturno, (170, 150))
-        urano = pygame.image.load('../retro-galaxy/src/sprites/Menu/urano.png')
+        urano = pygame.image.load('../retro-galaxy/src/sprites/Menu/Urano.png')
         urano = pygame.transform.scale(urano, (150, 150))
         neptuno = pygame.image.load('../retro-galaxy/src/sprites/Menu/neptuno.png')
         neptuno = pygame.transform.scale(neptuno, (150, 150))

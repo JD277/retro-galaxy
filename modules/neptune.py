@@ -1,7 +1,6 @@
 from global_variables import *
 from interface import Interface
 from  Galactic_Travel import *
-
 import Galactic_Travel as gt
 class Neptune:
     def __init__(self):
@@ -39,5 +38,7 @@ class Neptune:
         elif self.travel.gstate == False:
             self.travel.draw()
             new_game()
-
 neptune = Neptune()   
+
+
+
