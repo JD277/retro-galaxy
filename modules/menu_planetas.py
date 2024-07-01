@@ -1,6 +1,7 @@
 import pygame
 import sys 
 import neptune
+import uranus
 
 pygame.init()
 mainClock = pygame.time.Clock()
@@ -89,11 +90,12 @@ def main_menu():
         if button_7.collidepoint((mx, my)):
             if click:
                 planet7()
+                uranus.urano.asteroids.mstate = False
+
         if button_8.collidepoint((mx, my)):
             if click:
                 planet8()
                 neptune.neptune.travel.mstate = False
-                pygame.mixer.music.play()
         if button_9.collidepoint((mx, my)):
             if click:
                 planet9()
@@ -238,14 +240,13 @@ def planet7():
     running = True
     while running:
         screen.fill((0,0,0))
- 
-        draw_text('Urano', font, (255, 255, 255), screen, 20, 20)
+
+        uranus.urano.draw()
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
+            if uranus.urano.asteroids.mstate == True:
                     running = False
         
         pygame.display.update()
