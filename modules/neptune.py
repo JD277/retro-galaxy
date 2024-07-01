@@ -41,3 +41,13 @@ class Neptune:
             new_game()
 
 neptune = Neptune()   
+
+while running:
+    
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    
+    neptune.draw()
+    pygame.display.update()
+
