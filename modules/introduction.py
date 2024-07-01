@@ -1,17 +1,11 @@
 from global_variables import screen, running, pygame
-from interface import Button_game 
+import menu_planetas 
 
-
-#Defining variables
+# Defining variables
 counter = 0
-ggg = pygame.key.get_focused()
 condition = False
 end = False
 background = pygame.transform.scale(pygame.image.load('../retro-galaxy/src/backgrounds/intro-galaxy.png'),(1080,720))
-description = [
-    'Objetos y Abstraccion de datos',
-    'Seccion 01',
-]
 
 class intro: 
     def __init__(self, x, y, img, xt, yt, title, size, scale, scale_x = 0, scale_y = 0):
@@ -68,10 +62,12 @@ class Message:
     def draw_text(self):
         screen.blit(self.text_surf,self.text_rect)
 
-intro1 = intro(512, 260, "../retro-galaxy/src/sprites/udo_logo.png", 30, 30, 'UDO', 10, False)
-intro_load = intro(512, 480, "../retro-galaxy/src/sprites/rect.png", 213, 468, '2', 10, False)
-message1 = Message('Objetos y Abstraccion de datos', 3, 1, "../retro-galaxy/src/fonts/font1.otf", 15, 'white')
-message2 = Message('Seccion  01', 3, 20, "../retro-galaxy/src/fonts/font1.otf", 15, 'white')
+intro1 = intro(512, 260, "../retro-galaxy/src/sprites/Logo.png", 30, 30, 'UDO', 10, True, 600,500)
+intro_load = intro(512, 480, "../retro-galaxy/src/sprites/rect.png", 213, 468, '', 10, False)
+message1 = Message('Universidad de Oriente', 3, 1, "../retro-galaxy/src/fonts/font1.otf", 15, 'white')
+message2 = Message('Departamento de Computacion y Sistemas', 3, 20, "../retro-galaxy/src/fonts/font1.otf", 15, 'white')
+message3 = Message('Objetos y Abstraccion de datos', 3, 39, "../retro-galaxy/src/fonts/font1.otf", 15, 'white')
+message4 = Message('Seccion  01', 3, 58, "../retro-galaxy/src/fonts/font1.otf", 15, 'white')
 
 while running:
 
@@ -86,14 +82,16 @@ while running:
     intro_load.draw()
     message1.draw_text()
     message2.draw_text()
+    message3.draw_text()
+    message4.draw_text()
     intro_load.rect_draw('purple', 0 + counter, 24)
 
     if condition == True and end == False:
-       counter += 0.15   
+       counter += 1.5   
     
     if counter >= 598:
         end = True
-    
+        menu_planetas.main_menu()
     pygame.display.flip()
       
 pygame.quit()   

@@ -244,7 +244,7 @@ def galactic_travel():
     asteroid_group.draw(screen)
     jugador.posicion()
 
-    if game_over == False:
+    if game_over == False and start == True:
         if pygame.sprite.spritecollide(jugador, asteroid_group, False) and time - inv_frames > 3000:
             jugador.collide(time)
 
@@ -256,7 +256,7 @@ def galactic_travel():
             pygame.mixer.music.stop()
         jugador.clear(pygame.key.get_pressed(), asteroid_group)
         
-    else: 
+    if game_over == True: 
         restart.draw_text()
         restart2.draw_text()
         restart3.draw_text()
