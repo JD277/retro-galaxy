@@ -2,6 +2,7 @@ import pygame
 import sys 
 import neptune
 import uranus
+import earth
 
 pygame.init()
 mainClock = pygame.time.Clock()
@@ -78,6 +79,8 @@ def main_menu():
         if button_3.collidepoint((mx, my)):
             if click:
                 planet3()
+                earth.earth.buscaminas.mstate = False
+
         if button_4.collidepoint((mx, my)):
             if click:
                 planet4()
@@ -168,13 +171,12 @@ def planet3():
     while running:
         screen.fill((0,0,0))
  
-        draw_text('Tierra', font, (255, 255, 255), screen, 20, 20)
+        earth.earth.draw()
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
+            if earth.earth.buscaminas.mstate == True:
                     running = False
         
         pygame.display.update()
