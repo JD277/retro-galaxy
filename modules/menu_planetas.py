@@ -1,19 +1,23 @@
 from global_variables import Message
 import pygame
-import sys 
+import sys
 import neptune
 import uranus
 import earth
+import Mercury
 
 pygame.init()
 mainClock = pygame.time.Clock()
 from pygame.locals import *
+
 pygame.display.set_caption('Menu')
-screen = pygame.display.set_mode((1080, 720),0,32)
+screen = pygame.display.set_mode((1080, 720), 0, 32)
 fondo = pygame.image.load("../retro-galaxy/src/sprites/Menu/fondo.jpg")
 fondo = pygame.transform.scale(fondo, (1080, 720))
 font = pygame.font.SysFont('Arial', 60)
 mouse = pygame.mouse.get_cursor()
+hover = False
+
 
 nmusic = pygame.mixer.Sound("../retro-galaxy/src/sounds/neptune.mp3")
 
@@ -23,14 +27,16 @@ def draw_text(text, font, color, surface, x, y):
     textrect = textobj.get_rect()
     textrect.topleft = (x, y)
     surface.blit(textobj, textrect)
- 
+
+
 click = False
- 
+
+
 def main_menu():
-    global click
+    global click, hover
     while True:
- 
-        screen.blit(fondo, (0,0))
+
+        screen.blit(fondo, (0, 0))
 
         mercurio = pygame.image.load('../retro-galaxy/src/sprites/Menu/mercurio.png')
         mercurio = pygame.transform.scale(mercurio, (150, 150))
@@ -52,9 +58,9 @@ def main_menu():
         pluton = pygame.transform.scale(pluton, (150, 150))
 
         mx, my = pygame.mouse.get_pos()
-        
+
         button_1 = mercurio.get_rect()
-        button_1.center = (200, 280)
+        button_1.center = (180, 280)
         button_2 = venus.get_rect()
         button_2.center = (320, 150)
         button_3 = tierra.get_rect()
@@ -62,7 +68,7 @@ def main_menu():
         button_4 = marte.get_rect()
         button_4.center = (730, 150)
         button_5 = jupiter.get_rect()
-        button_5.center = (850, 280)
+        button_5.center = (890, 280)
         button_6 = saturno.get_rect()
         button_6.center = (800, 450)
         button_7 = urano.get_rect()
@@ -71,7 +77,7 @@ def main_menu():
         button_8.center = (620, 560)
         button_9 = pluton.get_rect()
         button_9.center = (280, 450)
-        
+
         if button_1.collidepoint((mx, my)):
             if click:
                 planet1()
@@ -130,7 +136,7 @@ def main_menu():
             if hover:
                 pluton = pygame.image.load('../retro-galaxy/src/sprites/Menu/plutonglow.png')
                 pluton = pygame.transform.scale(pluton, (150, 150))
-       
+
         screen.blit(mercurio, button_1)
         screen.blit(venus, button_2)
         screen.blit(tierra, button_3)
@@ -140,7 +146,7 @@ def main_menu():
         screen.blit(urano, button_7)
         screen.blit(neptuno, button_8)
         screen.blit(pluton, button_9)
- 
+
         click = False
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -155,34 +161,34 @@ def main_menu():
                     click = True
             if event.type == MOUSEMOTION:
                 hover = True
- 
+
         pygame.display.update()
         mainClock.tick(60)
- 
+
+
 def planet1():
     global click
     running = True
     while running:
-        screen.fill((0, 0, 0))
         
-        draw_text('Mercurio', font, (255, 255, 255), screen, 20, 20)
+        Mercury.mercurio.draw()
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
+            if Mercury.mercurio.dino.mstate == True:
                     running = False
-        
+
         pygame.display.update()
         mainClock.tick(60)
- 
+
+
 def planet2():
     global click
     running = True
     while running:
-        screen.fill((0,0,0))
- 
+        screen.fill((0, 0, 0))
+
         draw_text('Venus', font, (255, 255, 255), screen, 20, 20)
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -191,31 +197,33 @@ def planet2():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
-        
+
         pygame.display.update()
         mainClock.tick(60)
+
 
 def planet3():
     global click
     running = True
     while running:
- 
+
         earth.earth.draw()
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
             if earth.earth.buscaminas.mstate == True:
-                    running = False
-        
+                running = False
+
         pygame.display.update()
         mainClock.tick(60)
+
 
 def planet4():
     global click
     running = True
     while running:
- 
+
         draw_text('Marte', font, (255, 255, 255), screen, 20, 20)
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -224,16 +232,17 @@ def planet4():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
-        
+
         pygame.display.update()
         mainClock.tick(60)
+
 
 def planet5():
     global click
     running = True
     while running:
-        screen.fill((0,0,0))
- 
+        screen.fill((0, 0, 0))
+
         draw_text('Jupiter', font, (255, 255, 255), screen, 20, 20)
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -242,17 +251,18 @@ def planet5():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
-        
+
         pygame.display.update()
         mainClock.tick(60)
+
 
 def planet6():
     global click
     global click
     running = True
     while running:
-        screen.fill((0,0,0))
- 
+        screen.fill((0, 0, 0))
+
         draw_text('Saturno', font, (255, 255, 255), screen, 20, 20)
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -261,15 +271,16 @@ def planet6():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
-        
+
         pygame.display.update()
         mainClock.tick(60)
+
 
 def planet7():
     global click
     running = True
     while running:
-        screen.fill((0,0,0))
+        screen.fill((0, 0, 0))
 
         uranus.urano.draw()
         for event in pygame.event.get():
@@ -277,10 +288,11 @@ def planet7():
                 pygame.quit()
                 sys.exit()
             if uranus.urano.asteroids.mstate == True:
-                    running = False
-        
+                running = False
+
         pygame.display.update()
         mainClock.tick(60)
+
 
 def planet8():
     global nmusic, click
@@ -292,17 +304,18 @@ def planet8():
                 pygame.quit()
                 sys.exit()
             if neptune.neptune.travel.mstate == True:
-                    running = False
-        
+                running = False
+
         pygame.display.update()
         mainClock.tick(60)
+
 
 def planet9():
     global click
     running = True
     while running:
-        screen.fill((0,0,0))
- 
+        screen.fill((0, 0, 0))
+
         draw_text('Pluton', font, (255, 255, 255), screen, 20, 20)
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -311,7 +324,6 @@ def planet9():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
-        
+
         pygame.display.update()
         mainClock.tick(60)
- 

@@ -1,5 +1,5 @@
 from global_variables import screen, running, pygame, Message
-import menu_planetas 
+import menu_planetas
 
 # Defining variables
 counter = 0
