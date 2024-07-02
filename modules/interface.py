@@ -1,7 +1,7 @@
 # Importing lib
 from global_variables import screen, running, pygame
 class Button_game:
-    def __init__(self,img, title="lorem   ipsum", x=0, y=0, xt=0, yt=0, color1 =(255,255,255), color2=(255,255,255), size=16):
+    def __init__(self,img, title="", x=0, y=0, xt=0, yt=0, color1 =(255,255,255), color2=(255,255,255), size=16):
         # Button label
         self.color1 = color1
         self.color2 = color2
@@ -13,7 +13,8 @@ class Button_game:
 
         self.X_POS = x
         self.Y_POS = y
-        self.btn_surf = pygame.image.load(img)
+        self.img = img
+        self.btn_surf = pygame.image.load(self.img)
         self.BTN_RECT = pygame.Surface.get_rect(self.btn_surf, topleft =(self.X_POS,self.Y_POS))
     # Function to create dynamic text
     def CREATE_TEXT (self, size, pos_x, pos_y, text, bold=0,):
@@ -51,7 +52,7 @@ class Button_game:
         
 class Interface:
     # Define the constructor function for the class
-    def __init__(self, micon, img, img_icon, x, y, title, description =["Lorem ipsum"], color1 =(255,255,255), color2=(255,255,255), wimg="../retro-galaxy/src/buttons/warning-btn.png", wicon="../retro-galaxy/src/buttons/clock-icon.png"):
+    def __init__(self, micon, img, img_icon, x, y, title, description =[""], color1 =(255,255,255), color2=(255,255,255), wimg="../retro-galaxy/src/buttons/warning-btn.png", wicon="../retro-galaxy/src/buttons/clock-icon.png"):
         
         # btn stuff
         self.btn = []
