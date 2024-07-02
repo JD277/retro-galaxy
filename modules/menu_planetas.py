@@ -1,3 +1,4 @@
+from global_variables import Message
 import pygame
 import sys 
 import neptune
@@ -12,6 +13,7 @@ screen = pygame.display.set_mode((1080, 720),0,32)
 fondo = pygame.image.load("../retro-galaxy/src/sprites/Menu/fondo.jpg")
 fondo = pygame.transform.scale(fondo, (1080, 720))
 font = pygame.font.SysFont('Arial', 60)
+mouse = pygame.mouse.get_cursor()
 
 nmusic = pygame.mixer.Sound("../retro-galaxy/src/sounds/neptune.mp3")
 
@@ -73,35 +75,61 @@ def main_menu():
         if button_1.collidepoint((mx, my)):
             if click:
                 planet1()
+            if hover:
+                mercurio = pygame.image.load('../retro-galaxy/src/sprites/Menu/mercuriotriste.png')
+                mercurio = pygame.transform.scale(mercurio, (150, 150))
+
         if button_2.collidepoint((mx, my)):
             if click:
                 planet2()
+            if hover:
+                venus = pygame.image.load('../retro-galaxy/src/sprites/Menu/venusglow.png')
+                venus = pygame.transform.scale(venus, (150, 150))
         if button_3.collidepoint((mx, my)):
             if click:
                 planet3()
                 earth.earth.buscaminas.mstate = False
-
+            if hover:
+                tierra = pygame.image.load('../retro-galaxy/src/sprites/Menu/tierraglow.png')
+                tierra = pygame.transform.scale(tierra, (150, 150))
         if button_4.collidepoint((mx, my)):
             if click:
                 planet4()
+            if hover:
+                marte = pygame.image.load('../retro-galaxy/src/sprites/Menu/marteglow.png')
+                marte = pygame.transform.scale(marte, (150, 150))
         if button_5.collidepoint((mx, my)):
             if click:
                 planet5()
+            if hover:
+                jupiter = pygame.image.load('../retro-galaxy/src/sprites/Menu/jupiterglow.png')
+                jupiter = pygame.transform.scale(jupiter, (150, 150))
         if button_6.collidepoint((mx, my)):
             if click:
                 planet6()
+            if hover:
+                saturno = pygame.image.load('../retro-galaxy/src/sprites/Menu/saturnoglow.png')
+                saturno = pygame.transform.scale(saturno, (170, 150))
         if button_7.collidepoint((mx, my)):
             if click:
                 planet7()
                 uranus.urano.asteroids.mstate = False
-
+            if hover:
+                urano = pygame.image.load('../retro-galaxy/src/sprites/Menu/Uranoglow.png')
+                urano = pygame.transform.scale(urano, (150, 150))
         if button_8.collidepoint((mx, my)):
             if click:
                 planet8()
                 neptune.neptune.travel.mstate = False
+            if hover:
+                neptuno = pygame.image.load('../retro-galaxy/src/sprites/Menu/neptunoglow.png')
+                neptuno = pygame.transform.scale(neptuno, (150, 150))
         if button_9.collidepoint((mx, my)):
             if click:
                 planet9()
+            if hover:
+                pluton = pygame.image.load('../retro-galaxy/src/sprites/Menu/plutonglow.png')
+                pluton = pygame.transform.scale(pluton, (150, 150))
        
         screen.blit(mercurio, button_1)
         screen.blit(venus, button_2)
@@ -125,6 +153,8 @@ def main_menu():
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
+            if event.type == MOUSEMOTION:
+                hover = True
  
         pygame.display.update()
         mainClock.tick(60)
@@ -169,7 +199,6 @@ def planet3():
     global click
     running = True
     while running:
-        screen.fill((0,0,0))
  
         earth.earth.draw()
         for event in pygame.event.get():
@@ -186,7 +215,6 @@ def planet4():
     global click
     running = True
     while running:
-        screen.fill((0,0,0))
  
         draw_text('Marte', font, (255, 255, 255), screen, 20, 20)
         for event in pygame.event.get():

@@ -1,4 +1,4 @@
-from global_variables import screen, running, pygame
+from global_variables import screen, running, pygame, Message
 import menu_planetas 
 
 # Defining variables
@@ -49,18 +49,6 @@ class intro:
     def rect_draw(self, color, width, heigth):
 
         self.rect = pygame.draw.rect(screen, color, pygame.Rect(self.xt,self.yt, width, heigth))
-
-class Message:
-    def __init__(self, text, x, y, font, size, color):
-        self.text = text
-        self.x = x
-        self.y = y
-        self.text_font = pygame.font.Font(font, size)
-        self.text_surf = self.text_font.render(text, True, color)
-        self.text_rect = pygame.Surface.get_rect(self.text_surf, topleft = (x,y))
-
-    def draw_text(self):
-        screen.blit(self.text_surf,self.text_rect)
 
 intro1 = intro(512, 260, "../retro-galaxy/src/sprites/Logo.png", 30, 30, 'UDO', 10, True, 600,500)
 intro_load = intro(512, 480, "../retro-galaxy/src/sprites/rect.png", 213, 468, '', 10, False)
