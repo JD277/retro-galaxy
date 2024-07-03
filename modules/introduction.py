@@ -52,10 +52,10 @@ class intro:
 
 intro1 = intro(512, 260, "../retro-galaxy/src/sprites/Logo.png", 30, 30, 'UDO', 10, True, 600,500)
 intro_load = intro(512, 480, "../retro-galaxy/src/sprites/rect.png", 213, 468, '', 10, False)
-message1 = Message('Universidad de Oriente', 3, 1, "../retro-galaxy/src/fonts/font1.otf", 15, 'white')
-message2 = Message('Departamento de Computacion y Sistemas', 3, 20, "../retro-galaxy/src/fonts/font1.otf", 15, 'white')
-message3 = Message('Objetos y Abstraccion de datos', 3, 39, "../retro-galaxy/src/fonts/font1.otf", 15, 'white')
-message4 = Message('Seccion  01', 3, 58, "../retro-galaxy/src/fonts/font1.otf", 15, 'white')
+message1 = Message('Universidad de Oriente', 3, 1, "../retro-galaxy/src/fonts/font1.otf", 15, 'white',1)
+message2 = Message('Departamento de Computacion y Sistemas', 3, 20, "../retro-galaxy/src/fonts/font1.otf", 15, 'white',1)
+message3 = Message('Objetos y Abstraccion de datos', 3, 39, "../retro-galaxy/src/fonts/font1.otf", 15, 'white',1)
+message4 = Message('Seccion  01', 3, 58, "../retro-galaxy/src/fonts/font1.otf", 15, 'white',1)
 
 while running:
 
