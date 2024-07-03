@@ -529,5 +529,3 @@ def juego():
         pygame.display.flip()
 
     pygame.quit()
-
-juego()

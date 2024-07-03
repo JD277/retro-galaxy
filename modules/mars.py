@@ -1,6 +1,7 @@
 from global_variables import *
 from interface import Interface
-
+from Mars_Breaker import *
+import Mars_Breaker as M
 
 class Mars:
     def __init__(self):
