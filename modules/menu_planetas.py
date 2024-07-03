@@ -6,6 +6,7 @@ import uranus
 import earth
 import Mercury
 import mars
+import pluto
 
 pygame.init()
 mainClock = pygame.time.Clock()
@@ -151,10 +152,11 @@ def main_menu():
         if button_9.collidepoint((mx, my)):
             if click:
                 planet9()
+                pluto.pluton.snake.mstate = False
             if hover:
                 pluton = pygame.image.load('../retro-galaxy/src/sprites/Menu/plutonglow.png')
                 pluton = pygame.transform.scale(pluton, (150, 150))
-                message = "Pluton ()"
+                message = "Pluton (Snake)"
 
         screen.blit(text_box,text_box_rect)
         screen.blit(mercurio, button_1)
@@ -336,16 +338,15 @@ def planet9():
     global click
     running = True
     while running:
-        screen.fill((0, 0, 0))
 
-        draw_text('Pluton', font, (255, 255, 255), screen, 20, 20)
+        pluto.pluton.draw()
+
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    running = False
+            if pluto.pluton.snake.mstate == True:
+                running = False
 
         pygame.display.update()
         mainClock.tick(60)
