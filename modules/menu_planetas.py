@@ -81,6 +81,7 @@ def main_menu():
         if button_1.collidepoint((mx, my)):
             if click:
                 planet1()
+                Mercury.mercurio.dino.mstate = False
             if hover:
                 mercurio = pygame.image.load('../retro-galaxy/src/sprites/Menu/mercuriotriste.png')
                 mercurio = pygame.transform.scale(mercurio, (150, 150))
