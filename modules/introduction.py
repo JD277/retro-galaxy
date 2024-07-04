@@ -1,7 +1,8 @@
 from global_variables import screen, running, pygame, Message
 import menu_planetas
+pygame.init()
 
-# Defining variables
+# Defining variablesw
 counter = 0
 condition = False
 end = False

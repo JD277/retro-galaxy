@@ -1,7 +1,9 @@
+import global_variables as gv
 from global_variables import *
 from interface import Interface
 from Mars_Breaker import *
 import Mars_Breaker as M
+pygame.init()
 
 class Mars:
     def __init__(self):
