@@ -1,6 +1,7 @@
 import pygame
 import sys
 import random
+import Jupiter as J
 
 # Inicializar Pygame
 pygame.init()
@@ -123,6 +124,8 @@ def game_over():
                 if event.key == pygame.K_r:
                     waiting = False
                     main_game()
+            if event.type == pygame.K_ESCAPE:
+                J.jupiter.spaceinvader.gstate == False
                     
 # Función para mostrar la pantalla de victoria y preguntar por mayor dificultad
 def victory_screen():
