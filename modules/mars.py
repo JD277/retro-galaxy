@@ -31,11 +31,14 @@ class Mars:
         if self.Breaker.gstate == True:
             M.juego()
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_ESCAPE] == True and M.finalizar == True:
+            if keys[pygame.K_ESCAPE] == True or M.salida == False:
                  self.Breaker.gstate = False
 
         elif self.Breaker.gstate == False:
             self.Breaker.draw()
+            M.finalizar = False
+            M.jugar = True
+
             
     
 mars = Mars()
