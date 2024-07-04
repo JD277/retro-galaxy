@@ -35,6 +35,12 @@ class Venus:
     def draw(self):
         if self.dino.gstate == True:
 
+            self.image = pygame.image.load("../retro-galaxy/src/buttons/warning-btn2.png")
+            self.image_rect = self.image.get_rect()
+            self.image_rect.center = (540, 360)
+
+            screen.blit(self.image,self.image_rect)
+
             keys = pygame.key.get_pressed()
             if keys[pygame.K_ESCAPE] == True:
                 self.dino.gstate = False
