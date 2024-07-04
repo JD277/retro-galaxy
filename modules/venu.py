@@ -36,7 +36,7 @@ class Venus:
 
     def draw(self):
         if self.dino.gstate == True:
-            pass
+
             keys = pygame.key.get_pressed()
             if keys[pygame.K_ESCAPE] == True:
                 self.dino.gstate = False
@@ -900,7 +900,6 @@ def get_objetivos(rojo_x, rojo_y, azul_x, azul_y,
 
 #Main principal y bucle principal
 if __name__ == '__main__':
-    pygame.init()
 
     #paleta de colores
     Blanco = (255, 255, 255)
@@ -986,7 +985,7 @@ if __name__ == '__main__':
     game_won = False
 
     run = True
-    while run and vidas > 0:
+    while run:
         timer.tick(fps)
         if cont < 19:
             cont += 1

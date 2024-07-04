@@ -9,6 +9,7 @@ import Mercury
 import mars
 import pluto
 import Jupiter
+import venu
 
 mainClock = pygame.time.Clock()
 from pygame.locals import *
@@ -97,10 +98,11 @@ def main_menu():
         if button_2.collidepoint((mx, my)):
             if click:
                 planet2()
+                venu.venus.dino.mstate = False
             if hover:
                 venus = pygame.image.load('../retro-galaxy/src/sprites/Menu/venusglow.png')
                 venus = pygame.transform.scale(venus, (150, 150))
-                message = "Venus ()"
+                message = "Venus (Pacman)"
         if button_3.collidepoint((mx, my)):
             if click:
                 planet3()
@@ -211,16 +213,13 @@ def planet2():
     global click
     running = True
     while running:
-        screen.fill((0, 0, 0))
-
-        draw_text('Venus', font, (255, 255, 255), screen, 20, 20)
+        venu.venus.draw()
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    running = False
+            if venu.venus.dino.mstate == True:
+                running = False
 
         pygame.display.update()
         mainClock.tick(60)
