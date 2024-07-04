@@ -2,7 +2,7 @@ from global_variables import *
 import pygame, random, time, sys
 import pygame.mixer
 import global_variables as gv
-import mars
+
 
 
 # definicion de colores
@@ -323,7 +323,6 @@ def juego():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                gv.running = False
                 finalizar = True
                 jugar = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -349,7 +348,6 @@ def juego():
             pantallainicial(boton1, boton2)
             teclas = pygame.key.get_pressed()
             if teclas[pygame.K_ESCAPE] and inicio == False:
-                gv.running = False
                 finalizar = True
                 jugar = False
 
