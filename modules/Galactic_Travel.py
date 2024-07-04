@@ -3,7 +3,6 @@ from global_variables import *
 import random
 from interface import Button_game
 
-pygame.init()
 clock = pygame.time.Clock()
 bg = pygame.image.load('../retro-galaxy/src/backgrounds/travel-bg.jpeg')
 

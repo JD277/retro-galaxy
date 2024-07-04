@@ -3,7 +3,6 @@ import pygame, random, time, sys
 import pygame.mixer
 import global_variables as gv
 
-pygame.init()
 
 
 # definicion de colores

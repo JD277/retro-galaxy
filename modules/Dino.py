@@ -4,7 +4,7 @@ import random
 
 from pygame import K_ESCAPE, KEYDOWN
 
-pygame.init()
+()
 pygame.mixer.init()
 
 # Globales Constantes

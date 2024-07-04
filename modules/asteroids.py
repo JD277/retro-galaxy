@@ -3,7 +3,7 @@ import global_variables as gv
 import math 
 import random
 
-pygame.init()
+()
 
 alto= 1080
 ancho= 720
