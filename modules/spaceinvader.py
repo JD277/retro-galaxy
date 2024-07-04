@@ -2,7 +2,9 @@ import global_variables as gv
 from global_variables import *
 import sys
 import random
+import Jupiter
 
+menu = True
 # Colores
 background_color = (0, 0, 0)  # Negro
 text_color = (255, 255, 255)  # Blanco
@@ -22,7 +24,7 @@ class Character:
             sys.exit()
         self.x = x
         self.y = y
-        self.x_change = 0
+        self.x_change = 0                   
         self.y_change = 0
 
     def draw(self, screen):
@@ -144,12 +146,11 @@ def victory_screen():
 
 # Menú inicial
 def main_menu():
-    menu = True
-    while menu:
+        global menu
         screen.fill(background_color)
         show_text(screen, "Space Invaders", 300, 200)
         show_text(screen, "Presiona 'J' para Jugar", 270, 300)
-        show_text(screen, "Presiona 'Q' para Salir", 270, 350)
+        show_text(screen, "Presiona 'ESC' para Salir", 270, 350)
         pygame.display.flip()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -158,107 +159,111 @@ def main_menu():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_j:
                     menu = False
-                if event.key == pygame.K_q:
-                    running == False
-                    menu = False
-                
+                if event.key == pygame.K_ESCAPE:
+                    Jupiter.jupiter.spaceinvader.gstate = False
+                    
 
 # Juego principal
 def main_game():
-    global running
-    player = Player('../retro-galaxy/src/sprites/Space_invaders/jugador.png', screen_width // 2, screen_height - 70)
-    invader_images = [
-        '../retro-galaxy/src/sprites/Space_invaders/invasor1.png',
-        '../retro-galaxy/src/sprites/Space_invaders/invasor2.png',
-        '../retro-galaxy/src/sprites/Space_invaders/invasor3.png',
-        '../retro-galaxy/src/sprites/Space_invaders/invasor4.png'
-    ]
-    invaders = [Invader(random.choice(invader_images), random.randint(0, screen_width - 64), random.randint(50, 150), 0.5, 30) for _ in range(10)]
-    player_bullet = Bullet('../retro-galaxy/src/sprites/Space_invaders/bala.png', 0, screen_height - 70, -5)
-    enemy_bullets = []
-    obstacle_positions = [(200, screen_height - 150), (400, screen_height - 150), (600, screen_height - 150)]
-    obstacles = [Obstacle(x, y) for x, y in obstacle_positions]
-    score = 0
+    global running, menu
+    if menu == False:
+        player = Player('../retro-galaxy/src/sprites/Space_invaders/jugador.png', screen_width // 2, screen_height - 70)
+        invader_images = [
+            '../retro-galaxy/src/sprites/Space_invaders/invasor1.png',
+            '../retro-galaxy/src/sprites/Space_invaders/invasor2.png',
+            '../retro-galaxy/src/sprites/Space_invaders/invasor3.png',
+            '../retro-galaxy/src/sprites/Space_invaders/invasor4.png'
+        ]
+        invaders = [Invader(random.choice(invader_images), random.randint(0, screen_width - 64), random.randint(50, 150), 0.5, 30) for _ in range(10)]
+        player_bullet = Bullet('../retro-galaxy/src/sprites/Space_invaders/bala.png', 0, screen_height - 70, -5)
+        enemy_bullets = []
+        obstacle_positions = [(200, screen_height - 150), (400, screen_height - 150), (600, screen_height - 150)]
+        obstacles = [Obstacle(x, y) for x, y in obstacle_positions]
+        score = 0
 
-    invader_speed_increase = 0.05
+        invader_speed_increase = 0.05
 
-    running = True
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                    pygame.quit()
+                    
 
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    player.x_change = -2
-                if event.key == pygame.K_RIGHT:
-                    player.x_change = 2
-                if event.key == pygame.K_SPACE and player_bullet.state == "ready":
-                    player_bullet.fire(player.x + player.image.get_width() // 2 - player_bullet.image.get_width() // 2, player.y)
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_LEFT:
+                        player.x_change = -2
+                    if event.key == pygame.K_RIGHT:
+                        player.x_change = 2
+                    if event.key == pygame.K_SPACE and player_bullet.state == "ready":
+                        player_bullet.fire(player.x + player.image.get_width() // 2 - player_bullet.image.get_width() // 2, player.y)
+                    if event.key == pygame.K_ESCAPE:
+                        menu = True
+                        running = False
+                        Jupiter.jupiter.spaceinvader.gstate = False
 
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                    player.x_change = 0
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                        player.x_change = 0
 
-        player.move(player.x_change)
-        player_bullet.move()
+            player.move(player.x_change)
+            player_bullet.move()
 
-        # Movimiento de los invasores y disparos
-        for invader in invaders:
-            invader.move()
-            if player_bullet.state == "fire" and invader.get_rect().colliderect(player_bullet.get_rect()):
-                player_bullet.state = "ready"
-                player_bullet.y = screen_height - 70
-                invader.x = random.randint(0, screen_width - invader.image.get_width())
-                invader.y = random.randint(50, 150)
-                score += 1
-                # Incrementar la velocidad de los invasores
-                invader.x_change += invader_speed_increase
+            # Movimiento de los invasores y disparos
+            for invader in invaders:
+                invader.move()
+                if player_bullet.state == "fire" and invader.get_rect().colliderect(player_bullet.get_rect()):
+                    player_bullet.state = "ready"
+                    player_bullet.y = screen_height - 70
+                    invader.x = random.randint(0, screen_width - invader.image.get_width())
+                    invader.y = random.randint(50, 150)
+                    score += 1
+                    # Incrementar la velocidad de los invasores
+                    invader.x_change += invader_speed_increase
 
-            if random.randint(0, 100) < 1 and len(enemy_bullets) < 5:
-                enemy_bullet = Bullet('../retro-galaxy/src/sprites/Space_invaders/bala_enemiga.png', invader.x + invader.image.get_width() // 2 - player_bullet.image.get_width() // 2, invader.y, 3)
-                enemy_bullets.append(enemy_bullet)
+                if random.randint(0, 100) < 1 and len(enemy_bullets) < 5:
+                    enemy_bullet = Bullet('../retro-galaxy/src/sprites/Space_invaders/bala_enemiga.png', invader.x + invader.image.get_width() // 2 - player_bullet.image.get_width() // 2, invader.y, 3)
+                    enemy_bullets.append(enemy_bullet)
 
-            # Comprobar colisión entre invasor y jugador
-            if invader.get_rect().colliderect(player.get_rect()):
-                game_over()
+                # Comprobar colisión entre invasor y jugador
+                if invader.get_rect().colliderect(player.get_rect()):
+                    game_over()
 
-        # Agregar más invasores con el tiempo
-        if len(invaders) < 10:
-            invaders.append(Invader(random.choice(invader_images), random.randint(0, screen_width - 64), random.randint(50, 150), 0.5, 30))
+            # Agregar más invasores con el tiempo
+            if len(invaders) < 10:
+                invaders.append(Invader(random.choice(invader_images), random.randint(0, screen_width - 64), random.randint(50, 150), 0.5, 30))
 
-        # Movimiento de las balas enemigas
-        for bullet in enemy_bullets:
-            bullet.move()
-            if bullet.state == "ready":
-                enemy_bullets.remove(bullet)
-            if bullet.get_rect().colliderect(player.get_rect()):
-                game_over()
-
-        # Colisiones con obstáculos
-        for obstacle in obstacles:
-            if obstacle.hit(player_bullet.get_rect()):
-                player_bullet.state = "ready"
+            # Movimiento de las balas enemigas
             for bullet in enemy_bullets:
-                if obstacle.hit(bullet.get_rect()):
+                bullet.move()
+                if bullet.state == "ready":
                     enemy_bullets.remove(bullet)
+                if bullet.get_rect().colliderect(player.get_rect()):
+                    game_over()
 
-        screen.fill(background_color)
-        player.draw(screen)
-        for invader in invaders:
-            invader.draw(screen)
-        if player_bullet.state == "fire":
-            player_bullet.draw(screen)
-        for bullet in enemy_bullets:
-            bullet.draw(screen)
-        for obstacle in obstacles:
-            obstacle.draw(screen)
-        show_text(screen, f"Puntos: {score}", 10, 10)
+            # Colisiones con obstáculos
+            for obstacle in obstacles:
+                if obstacle.hit(player_bullet.get_rect()):
+                    player_bullet.state = "ready"
+                for bullet in enemy_bullets:
+                    if obstacle.hit(bullet.get_rect()):
+                        enemy_bullets.remove(bullet)
 
-        pygame.display.flip()
+            screen.fill(background_color)
+            player.draw(screen)
+            for invader in invaders:
+                invader.draw(screen)
+            if player_bullet.state == "fire":
+                player_bullet.draw(screen)
+            for bullet in enemy_bullets:
+                bullet.draw(screen)
+            for obstacle in obstacles:
+                obstacle.draw(screen)
+            show_text(screen, f"Puntos: {score}", 10, 10)
 
-    pygame.quit()
-    sys.exit()
+            pygame.display.flip()
+
 
 def main():
     main_menu()

@@ -2,7 +2,7 @@
 import pygame, sys
 from pygame.locals import *
 from game import *
-
+import pluto
 color_fondo = (15,30,0)
 color_fondo2 = (200,10,0)
 alto = 720
@@ -114,8 +114,7 @@ def game():
              if flechamov == 506:
                finalizar = True
                iniciar = False
-               sys.exit()
-             
+               pluto.pluton.snake.gstate = False             
              
 
                                     
