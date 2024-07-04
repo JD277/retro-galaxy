@@ -2,8 +2,6 @@ from global_variables import *
 from interface import Interface
 import pygame, math, copy
 from pygame.locals import *
-from Bordesitos import *
-
 
 class Venus:
     def __init__(self):

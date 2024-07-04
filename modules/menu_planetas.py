@@ -9,11 +9,11 @@ import Mercury
 import mars
 import pluto
 import Jupiter
-<<<<<<< HEAD
 import venu
-=======
+import Intefazsaturno
+
 pygame.init()
->>>>>>> 95b573e88122cb78a26afe7a8db5f4d9d48ee5ac
+
 
 mainClock = pygame.time.Clock()
 from pygame.locals import *
@@ -134,10 +134,11 @@ def main_menu():
         if button_6.collidepoint((mx, my)):
             if click:
                 planet6()
+                Intefazsaturno.saturno.cars.mstate = False
             if hover:
                 saturno = pygame.image.load('../retro-galaxy/src/sprites/Menu/saturnoglow.png')
                 saturno = pygame.transform.scale(saturno, (170, 150))
-                message = "Saturno ()"
+                message = "Saturno (Car Race)"
         if button_7.collidepoint((mx, my)):
             if click:
                 planet7()
@@ -285,16 +286,14 @@ def planet6():
     global click
     running = True
     while running:
-        screen.fill((0, 0, 0))
-
-        draw_text('Saturno', font, (255, 255, 255), screen, 20, 20)
+        
+        Intefazsaturno.saturno.draw()
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    running = False
+            if Intefazsaturno.saturno.cars.mstate == True:
+                running = False
 
         pygame.display.update()
         mainClock.tick(60)
