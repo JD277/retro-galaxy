@@ -52,11 +52,9 @@ class intro:
 intro1 = intro(512, 260, "../retro-galaxy/src/sprites/Logo.png", 30, 30, 'UDO', 10, True, 600,500)
 intro_load = intro(512, 480, "../retro-galaxy/src/sprites/rect.png", 213, 468, '', 10, False)
 message1 = Message('Universidad de Oriente', 3, 1, "../retro-galaxy/src/fonts/font1.otf", 15, 'white',1)
-message2 = Message('Nucleo Anzoategui', 3, 20, "../retro-galaxy/src/fonts/font1.otf", 15, 'white',1)
-message6 = Message('Escuela de ingenieria', 3, 39, "../retro-galaxy/src/fonts/font1.otf", 15, 'white',1)
-message5 = Message('Departamento de Computacion y Sistemas', 3, 58, "../retro-galaxy/src/fonts/font1.otf", 15, 'white',1)
-message3 = Message('Objetos y Abstraccion de datos', 3, 77, "../retro-galaxy/src/fonts/font1.otf", 15, 'white',1)
-message4 = Message('Seccion  01', 3, 96, "../retro-galaxy/src/fonts/font1.otf", 15, 'white',1)
+message2 = Message('Departamento de Computacion y Sistemas', 3, 20, "../retro-galaxy/src/fonts/font1.otf", 15, 'white',1)
+message3 = Message('Objetos y Abstraccion de datos', 3, 39, "../retro-galaxy/src/fonts/font1.otf", 15, 'white',1)
+message4 = Message('Seccion  01', 3, 58, "../retro-galaxy/src/fonts/font1.otf", 15, 'white',1)
 
 while running:
 
@@ -71,8 +69,6 @@ while running:
     intro1.draw()
     message1.draw_text()
     message2.draw_text()
-    message6.draw_text()
-    message5.draw_text()
     message3.draw_text()
     message4.draw_text()
     intro_load.rect_draw('purple', 0 + counter, 24)

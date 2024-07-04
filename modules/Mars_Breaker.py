@@ -2,7 +2,7 @@ from global_variables import *
 import pygame, random, time, sys
 import pygame.mixer
 import global_variables as gv
-
+import mars
 
 
 # definicion de colores
@@ -309,20 +309,19 @@ reinicio = False
 salida = True
 modoI = False
 modoD = False
-menu = False
 bloques = []
 jugar = True
 fase = True
 finalizar = False
-
+menu = False
 def juego():
-        global paleta, paleta2, paleta3, bola, bola2, bloques,boton4,boton5, inicio, reinicio, salida, modoD, modoI,jugar, fase,menu
+        global paleta, paleta2, paleta3, bola, bola2, bloques,boton4,boton5, inicio, reinicio, salida, modoD, modoI,jugar, fase, menu
 
     
         canal_sonido2.play(sonido2)
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                gv.running = False
                 finalizar = True
                 jugar = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -333,10 +332,9 @@ def juego():
                         boton1.sonidojuego()
                         fase = False
                     if salida == False:
+                        gv.running = False
                         finalizar = True
-                        jugar = False
                         mars.mars.Breaker.gstate = False
-
                 if inicio:
                     modoI = boton4.selector(event)
                     modoD = boton5.selector(event)
@@ -348,6 +346,7 @@ def juego():
             pantallainicial(boton1, boton2)
             teclas = pygame.key.get_pressed()
             if teclas[pygame.K_ESCAPE] and inicio == False:
+                gv.running = False
                 finalizar = True
                 jugar = False
 
@@ -401,9 +400,8 @@ def juego():
                     bola2.velocidad[0] = 0
                     bola2.velocidad[1] = 0
                     screen.blit(texto, (400, 50))
-                    for event in pygame.event.get():
-                        reinicio = boton3.reinicia(event)
-                        menu = boton6.volver(event)
+                    reinicio = boton3.reinicia(event)
+                    menu = boton6.volver(event)
                     canal_sonido1.play(sonido1)
 
                     if reinicio == True:
@@ -479,8 +477,9 @@ def juego():
                     bola.velocidad[0] = 0
                     bola.velocidad[1] = 0
                     screen.blit(texto, (400, 0))
-                    reinicio = boton3.reinicia(event)
-                    menu = boton6.volver(event)
+                    for event in pygame.event.get:
+                        reinicio = boton3.reinicia(event)
+                        menu = boton6.volver(event)
                     canal_sonido1.play(sonido1)
                     if reinicio == True:
                         paleta = Paleta((ancho // 40 - 15), (alto // 20 - 10), 20, 80)
@@ -500,8 +499,7 @@ def juego():
                     bola.velocidad[0] = 0
                     bola.velocidad[1] = 0
                     screen.blit(texto, (400, 0))
-                    for event in pygame.event.get():
-
+                    for event in pygame.event.get:
                         reinicio = boton3.reinicia(event)
                         menu = boton6.volver(event)
                     canal_sonido1.play(sonido1)
@@ -527,3 +525,4 @@ def juego():
                 
 
         pygame.display.flip()
+
