@@ -8,6 +8,7 @@ import earth
 import Mercury
 import mars
 import pluto
+import Jupiter
 
 pygame.init()
 mainClock = pygame.time.Clock()
@@ -121,10 +122,11 @@ def main_menu():
         if button_5.collidepoint((mx, my)):
             if click:
                 planet5()
+                Jupiter.jupiter.spaceinvader.mstate = False
             if hover:
                 jupiter = pygame.image.load('../retro-galaxy/src/sprites/Menu/jupiterglow.png')
                 jupiter = pygame.transform.scale(jupiter, (150, 150))
-                message = "Jupiter ()"
+                message = "Jupiter (Space Invader)"
         if button_6.collidepoint((mx, my)):
             if click:
                 planet6()
@@ -264,16 +266,14 @@ def planet5():
     global click
     running = True
     while running:
-        screen.fill((0, 0, 0))
-
-        draw_text('Jupiter', font, (255, 255, 255), screen, 20, 20)
+        
+        Jupiter.jupiter.draw()
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    running = False
+            if Jupiter.jupiter.spaceinvader.mstate == True:
+                running = False
 
         pygame.display.update()
         mainClock.tick(60)
