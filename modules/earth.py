@@ -1,5 +1,6 @@
 from global_variables import *
 from interface import Interface
+import Buscaminas
 class Earth:
     def __init__(self):
     # ----------------------------Interface Variables-------------------------
@@ -31,7 +32,8 @@ class Earth:
     # ----------------------------Interface Variables-------------------------
     def draw(self):
         if self.buscaminas.gstate == True:
-            #asteroids.asteroids()
+            screen.fill("#000000")
+            Buscaminas.main()
             keys = pygame.key.get_pressed()
             if keys[pygame.K_ESCAPE] == True: 
                  self.buscaminas.gstate = False

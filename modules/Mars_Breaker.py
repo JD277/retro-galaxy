@@ -20,22 +20,21 @@ anchura= 110
 altura= 110
 anchura2= 150
 altura2= 150
-pygame.display.set_caption("Mars Breaker")
 
 # Sonidos
-sonido_pong = pygame.mixer.Sound("../retro-galaxy/src/Sounds/Mars_Breaker/spong.wav")
+sonido_pong = pygame.mixer.Sound("../retro-galaxy/src/sounds/Mars_Breaker/spong.wav")
 canal_pong = pygame.mixer.Channel(0)
-sonido1 = pygame.mixer.Sound("../retro-galaxy/src/Sounds/Mars_Breaker/sonido1.wav")
+sonido1 = pygame.mixer.Sound("../retro-galaxy/src/sounds/Mars_Breaker/sonido1.wav")
 canal_sonido1 = pygame.mixer.Channel(1)
-sonido2 = pygame.mixer.Sound('../retro-galaxy/src/Sounds/Mars_Breaker/sonido2.wav')
+sonido2 = pygame.mixer.Sound('../retro-galaxy/src/sounds/Mars_Breaker/sonido2.wav')
 canal_sonido2 = pygame.mixer.Channel(2)
 
 # Imagenes
-fondo = pygame.image.load('../retro-galaxy/src/Backgrounds/MBreaker/fondoIG.jpeg')
+fondo = pygame.image.load('../retro-galaxy/src/backgrounds/MBreaker/fondoIG.jpeg')
 fondo = pygame.transform.scale(fondo, (1080, 720))
-fondo2 = pygame.image.load('../retro-galaxy/src/Backgrounds/MBreaker/fondo4.jpeg')
+fondo2 = pygame.image.load('../retro-galaxy/src/backgrounds/MBreaker/fondo4.jpeg')
 fondo2 = pygame.transform.scale(fondo2, (1080, 720))
-interfaz = pygame.image.load('../retro-galaxy/src/Backgrounds/MBreaker/OIG4.jpeg')
+interfaz = pygame.image.load('../retro-galaxy/src/backgrounds/MBreaker/OIG4.jpeg')
 interfaz = pygame.transform.scale(interfaz, (1080, 720))
 textura = pygame.image.load('../retro-galaxy/src/sprites/Mars/textura.jpg')
 textura = pygame.transform.scale(textura, (80, 40))

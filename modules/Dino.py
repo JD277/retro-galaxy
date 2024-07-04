@@ -1,6 +1,5 @@
-import pygame
-import sys
-import os
+from global_variables import *
+import global_variables as gv 
 import random
 
 from pygame import K_ESCAPE, KEYDOWN
@@ -12,8 +11,6 @@ pygame.mixer.init()
 
 PANTALLA_ALTO = 720
 PANTALLA_ANCHO = 1080
-SCREEN = pygame.display.set_mode((PANTALLA_ANCHO, PANTALLA_ALTO))
-pygame.display.set_caption('Dino')
 
 CORRER = [pygame.image.load("../retro-galaxy/src/sprites/Dino/dino/DinoRun1.png"),
           pygame.image.load("../retro-galaxy/src/sprites/Dino/dino/DinoRun2.png")]
@@ -127,8 +124,8 @@ class Dinosaurio:
             self.dino_saltar = False
             self.jump_vel = self.JUMP_VEL
 
-    def draw(self, SCREEN):
-        SCREEN.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
+    def draw(self, screen):
+        screen.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
 
 
 class Nube:
@@ -145,8 +142,8 @@ class Nube:
             self.x = PANTALLA_ANCHO + random.randint(2500 , 3000)
             self.y = random.randint(20 , 70)
 
-    def draw(self , SCREEN):
-        SCREEN.blit(self.image, (self.x, self.y))
+    def draw(self , screen):
+        screen.blit(self.image, (self.x, self.y))
 
 
 class Obstaculo:
@@ -161,8 +158,8 @@ class Obstaculo:
         if self.rect.x < -self.rect.width:
             obstaculos.pop()
 
-    def draw(self, SCREEN):
-        SCREEN.blit(self.image[self.type], self.rect)
+    def draw(self, screen):
+        screen.blit(self.image[self.type], self.rect)
 
 
 class CactusPequeño(Obstaculo):
@@ -186,14 +183,14 @@ class Bird(Obstaculo):
         self.rect.y = 120
         self.index = 0
 
-    def draw(self, SCREEN):
+    def draw(self, screen):
         if self.index >= 9:
             self.index = 0
-        SCREEN.blit(self.image[self.index // 5], self.rect)
+        screen.blit(self.image[self.index // 5], self.rect)
         self.index += 1
 
 def Pantalla():
-    SCREEN.fill((0, 0, 0))
+    screen.fill((0, 0, 0))
 
 def death_sound():
     global sound_played
@@ -227,16 +224,16 @@ def main():
         text = font.render("Puntos: " + str(puntos), True, ( 255, 255, 255))
         textRect = text.get_rect()
         textRect.center = (1000, 40)
-        SCREEN.blit(text, textRect)
+        screen.blit(text, textRect)
 
 
     def Piso():
         global x_pos_bg, y_pos_bg
         image_ancho = PISTA.get_width()
-        SCREEN.blit(PISTA, (x_pos_bg, y_pos_bg))
-        SCREEN.blit(PISTA, (image_ancho + x_pos_bg, y_pos_bg))
+        screen.blit(PISTA, (x_pos_bg, y_pos_bg))
+        screen.blit(PISTA, (image_ancho + x_pos_bg, y_pos_bg))
         if x_pos_bg  <= - image_ancho:
-            SCREEN.blit(PISTA, (image_ancho + x_pos_bg, y_pos_bg))
+            screen.blit(PISTA, (image_ancho + x_pos_bg, y_pos_bg))
             x_pos_bg = 0
         x_pos_bg -= game_speed
 
@@ -253,10 +250,10 @@ def main():
 
         if muertes == 0:
            Pantalla()
-           SCREEN.blit(flecha1 , (500, 470))
-           SCREEN.blit(flecha2, (500, 570))
-           SCREEN.blit(text, textRect)
-           player.draw(SCREEN)
+           screen.blit(flecha1 , (500, 470))
+           screen.blit(flecha2, (500, 570))
+           screen.blit(text, textRect)
+           player.draw(screen)
            if len(obstaculos) == 0:
                 if random.randint(0, 2) == 0:
                    obstaculos.append(CactusPequeño(CACTUS_PEQUEÑO))
@@ -266,7 +263,7 @@ def main():
                     obstaculos.append(Bird(BIRD))
 
            for obstaculo in obstaculos:
-                obstaculo.draw(SCREEN)
+                obstaculo.draw(screen)
                 obstaculo.update()
                 if player.dino_rect.colliderect(obstaculo.rect):
                     pygame.time.delay(1000)
@@ -277,7 +274,7 @@ def main():
            player.update(userInput)
 
            Piso()
-           nube.draw(SCREEN)
+           nube.draw(screen)
            nube.update()
            Puntuacion()
             
@@ -286,7 +283,7 @@ def main():
 
         if muertes > 0:
 
-            SCREEN.fill((0, 0, 0))
+            screen.fill((0, 0, 0))
             text = font.render("Press Enter to Restart", True, (255, 255, 255))
             textRect = text.get_rect()
             textRect.center = (PANTALLA_ANCHO // 2, PANTALLA_ALTO // 2)
@@ -294,9 +291,9 @@ def main():
             score = font.render("Your Score: " + str(puntos), True, (255, 255, 255))
             scoreRect = score.get_rect()
             scoreRect.center = (PANTALLA_ANCHO // 2, PANTALLA_ALTO // 2 + 100)
-            SCREEN.blit(text, textRect)
-            SCREEN.blit(score, scoreRect)
-            SCREEN.blit(GAME_OVER, (PANTALLA_ANCHO // 2 - 180, PANTALLA_ALTO // 2 - 200))
+            screen.blit(text, textRect)
+            screen.blit(score, scoreRect)
+            screen.blit(GAME_OVER, (PANTALLA_ANCHO // 2 - 180, PANTALLA_ALTO // 2 - 200))
             pygame.display.update()
 
         for event in pygame.event.get():

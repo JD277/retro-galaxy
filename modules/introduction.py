@@ -66,8 +66,8 @@ while running:
             running = False
     
     screen.blit(background,(0,0))
-    intro1.draw()
     intro_load.draw()
+    intro1.draw()
     message1.draw_text()
     message2.draw_text()
     message3.draw_text()

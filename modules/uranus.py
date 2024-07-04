@@ -38,7 +38,4 @@ class Uranus:
         elif self.asteroids.gstate == False:
             self.asteroids.draw()
 
-urano = Uranus()
-
-
-    
+urano = Uranus()    

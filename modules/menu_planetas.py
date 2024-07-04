@@ -1,5 +1,6 @@
 from global_variables import Message
-import pygame
+from global_variables import *
+import global_variables as gv
 import sys
 import neptune
 import uranus
@@ -12,8 +13,6 @@ pygame.init()
 mainClock = pygame.time.Clock()
 from pygame.locals import *
 
-pygame.display.set_caption('Menu')
-screen = pygame.display.set_mode((1080, 720), 0, 32)
 fondo = pygame.image.load("../retro-galaxy/src/sprites/Menu/fondo.jpg")
 fondo = pygame.transform.scale(fondo, (1080, 720))
 text_box = pygame.image.load("../retro-galaxy/src/sprites/Menu/dialogue_box1.png")
