@@ -1,22 +1,26 @@
 from global_variables import Message
-import pygame
+from global_variables import *
+import global_variables as gv
 import sys
 import neptune
 import uranus
 import earth
 import Mercury
+import mars
+import pluto
+import Jupiter
 
 pygame.init()
 mainClock = pygame.time.Clock()
 from pygame.locals import *
 
-pygame.display.set_caption('Menu')
-screen = pygame.display.set_mode((1080, 720), 0, 32)
 fondo = pygame.image.load("../retro-galaxy/src/sprites/Menu/fondo.jpg")
 fondo = pygame.transform.scale(fondo, (1080, 720))
+text_box = pygame.image.load("../retro-galaxy/src/sprites/Menu/dialogue_box1.png")
 font = pygame.font.SysFont('Arial', 60)
 mouse = pygame.mouse.get_cursor()
 hover = False
+
 
 
 nmusic = pygame.mixer.Sound("../retro-galaxy/src/sounds/neptune.mp3")
@@ -33,11 +37,12 @@ click = False
 
 
 def main_menu():
-    global click, hover
+    global click, hover, text_box
     while True:
 
         screen.blit(fondo, (0, 0))
 
+        message = "RETRO GALAXY"
         mercurio = pygame.image.load('../retro-galaxy/src/sprites/Menu/mercurio.png')
         mercurio = pygame.transform.scale(mercurio, (150, 150))
         venus = pygame.image.load('../retro-galaxy/src/sprites/Menu/venus.png')
@@ -57,10 +62,14 @@ def main_menu():
         pluton = pygame.image.load('../retro-galaxy/src/sprites/Menu/pluton.png')
         pluton = pygame.transform.scale(pluton, (150, 150))
 
+        
+
         mx, my = pygame.mouse.get_pos()
 
+        text_box_rect = text_box.get_rect()
+        text_box_rect.center = (540,300)
         button_1 = mercurio.get_rect()
-        button_1.center = (180, 280)
+        button_1.center = (170, 280)
         button_2 = venus.get_rect()
         button_2.center = (320, 150)
         button_3 = tierra.get_rect()
@@ -81,9 +90,11 @@ def main_menu():
         if button_1.collidepoint((mx, my)):
             if click:
                 planet1()
+                Mercury.mercurio.dino.mstate = False
             if hover:
                 mercurio = pygame.image.load('../retro-galaxy/src/sprites/Menu/mercuriotriste.png')
                 mercurio = pygame.transform.scale(mercurio, (150, 150))
+                message = "Mercurio (Dino Run)"
 
         if button_2.collidepoint((mx, my)):
             if click:
@@ -91,6 +102,7 @@ def main_menu():
             if hover:
                 venus = pygame.image.load('../retro-galaxy/src/sprites/Menu/venusglow.png')
                 venus = pygame.transform.scale(venus, (150, 150))
+                message = "Venus ()"
         if button_3.collidepoint((mx, my)):
             if click:
                 planet3()
@@ -98,24 +110,30 @@ def main_menu():
             if hover:
                 tierra = pygame.image.load('../retro-galaxy/src/sprites/Menu/tierraglow.png')
                 tierra = pygame.transform.scale(tierra, (150, 150))
+                message = "Tierra (Buscaminas)"
         if button_4.collidepoint((mx, my)):
             if click:
                 planet4()
+                mars.mars.Breaker.mstate = False
             if hover:
                 marte = pygame.image.load('../retro-galaxy/src/sprites/Menu/marteglow.png')
                 marte = pygame.transform.scale(marte, (150, 150))
+                message = "Marte (Mars Breaker)"
         if button_5.collidepoint((mx, my)):
             if click:
                 planet5()
+                Jupiter.jupiter.spaceinvader.mstate = False
             if hover:
                 jupiter = pygame.image.load('../retro-galaxy/src/sprites/Menu/jupiterglow.png')
                 jupiter = pygame.transform.scale(jupiter, (150, 150))
+                message = "Jupiter (Space Invader)"
         if button_6.collidepoint((mx, my)):
             if click:
                 planet6()
             if hover:
                 saturno = pygame.image.load('../retro-galaxy/src/sprites/Menu/saturnoglow.png')
                 saturno = pygame.transform.scale(saturno, (170, 150))
+                message = "Saturno ()"
         if button_7.collidepoint((mx, my)):
             if click:
                 planet7()
@@ -123,6 +141,7 @@ def main_menu():
             if hover:
                 urano = pygame.image.load('../retro-galaxy/src/sprites/Menu/Uranoglow.png')
                 urano = pygame.transform.scale(urano, (150, 150))
+                message = "Urano (Asteroids)"
         if button_8.collidepoint((mx, my)):
             if click:
                 planet8()
@@ -130,13 +149,17 @@ def main_menu():
             if hover:
                 neptuno = pygame.image.load('../retro-galaxy/src/sprites/Menu/neptunoglow.png')
                 neptuno = pygame.transform.scale(neptuno, (150, 150))
+                message = "Neptuno (Galactic Travel)"
         if button_9.collidepoint((mx, my)):
             if click:
                 planet9()
+                pluto.pluton.snake.mstate = False
             if hover:
                 pluton = pygame.image.load('../retro-galaxy/src/sprites/Menu/plutonglow.png')
                 pluton = pygame.transform.scale(pluton, (150, 150))
+                message = "Pluton (Snake)"
 
+        screen.blit(text_box,text_box_rect)
         screen.blit(mercurio, button_1)
         screen.blit(venus, button_2)
         screen.blit(tierra, button_3)
@@ -146,6 +169,9 @@ def main_menu():
         screen.blit(urano, button_7)
         screen.blit(neptuno, button_8)
         screen.blit(pluton, button_9)
+
+        main_text = Message(message, 540, 300,'../retro-galaxy/src/fonts/font1.otf',30, "white",0)
+        main_text.draw_text()
 
         click = False
         for event in pygame.event.get():
@@ -224,14 +250,13 @@ def planet4():
     running = True
     while running:
 
-        draw_text('Marte', font, (255, 255, 255), screen, 20, 20)
+        mars.mars.draw()
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    running = False
+            if mars.mars.Breaker.mstate == True:
+                running = False
 
         pygame.display.update()
         mainClock.tick(60)
@@ -241,16 +266,14 @@ def planet5():
     global click
     running = True
     while running:
-        screen.fill((0, 0, 0))
-
-        draw_text('Jupiter', font, (255, 255, 255), screen, 20, 20)
+        
+        Jupiter.jupiter.draw()
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    running = False
+            if Jupiter.jupiter.spaceinvader.mstate == True:
+                running = False
 
         pygame.display.update()
         mainClock.tick(60)
@@ -314,16 +337,15 @@ def planet9():
     global click
     running = True
     while running:
-        screen.fill((0, 0, 0))
 
-        draw_text('Pluton', font, (255, 255, 255), screen, 20, 20)
+        pluto.pluton.draw()
+
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    running = False
+            if pluto.pluton.snake.mstate == True:
+                running = False
 
         pygame.display.update()
         mainClock.tick(60)

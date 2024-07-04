@@ -1,5 +1,5 @@
 
-import pygame, sys, tkinter
+import pygame, sys
 from pygame.locals import *
 from game import *
 
@@ -10,8 +10,8 @@ ancho = 1080
 pantalla = pygame.display.set_mode((ancho,alto))
 op=1
 on = False
-menu_sound = pygame.mixer.Sound("../retro-galaxy/src/Sounds/Planet_Snake/menu.mp3")
-start_sound = pygame.mixer.Sound("../retro-galaxy/src/Sounds/Planet_Snake/start.mp3")
+menu_sound = pygame.mixer.Sound("../retro-galaxy/src/sounds/Planet_Snake/menu.mp3")
+start_sound = pygame.mixer.Sound("../retro-galaxy/src/sounds/Planet_Snake/start.mp3")
 
 
 pygame.init()
@@ -35,7 +35,6 @@ def windowInit():
  pantalla.blit(Flechita,(315,flechamov,10, 30))
  pantalla.blit(Menu,(340,440))
  pantalla.blit(IconoScreen, (260,40,0,0))
- pygame.display.set_caption("PLANET SNAKE MENU")
  pygame.display.update()
  
 def windowGame():
@@ -51,13 +50,11 @@ def windowOp():
  pantalla.blit(texto3,(200,320))
  pantalla.blit(texto2,(200,408))
  
- pygame.display.set_caption("PLANET SNAKE OPCIONES")
  pygame.display.update()
  
 def windowIns():
  pantalla.fill((150,20,100))
  pantalla.blit(fondoIns, (-45,0))
- pygame.display.set_caption("PLANET SNAKE INSTRUCTIONS")
  pygame.display.update()
  
 iniciar = True

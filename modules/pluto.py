@@ -19,11 +19,11 @@ class Pluto:
         paragraph = [
             "Planet Snake es un juego basado en el clásico Snake.",
             "Controlas a una serpiente abrienta que se desliza por",
-            "las vastas llanuras heladas de Plutón. Tu misión es guiar",
-            "a la serpiente a través de este mundo congelado, recolectando",
+            "las vastas llanuras heladas de Plutón.", 
+            "Tu misión es guiar a la serpiente a través de este", 
+            "mundo congelado, recolectando",
             "manzanas para alimentar tu energía.",
-            "¿Estás listo para enfrentarte al desafio en el planeta más",
-            "distante del Sistema Solar?"
+            
 
             
         ]

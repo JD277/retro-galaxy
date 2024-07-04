@@ -1,5 +1,5 @@
-import pygame
-import random
+from global_variables import *
+import global_variables as gv
 
 # Inicialización de Pygame
 pygame.init()
@@ -10,15 +10,21 @@ NEGRO = (0, 0, 0)
 GRIS = (192, 192, 192)
 ROJO = (255, 0, 0)
 GRIS_OSCURO = (169, 169, 169)
+VERDE = (0, 255, 0)
+AZUL = (0, 0, 255)
 
-# Tamaño de la pantalla y de las casillas (
-ANCHO_PANTALLA = 400
-ALTO_PANTALLA = 500
+# Tamaño de la screen y de las casillas (
+ANCHO_PANTALLA = 800
+ALTO_PANTALLA = 450
 TAMANO_TABLERO = 300
 TAMANO_CASILLA = TAMANO_TABLERO // 18  # El tablero es de 12x12
 MARGEN = 3
 
-# Constantes para los diferentes modos de juego
+imagen_fondo = pygame.image.load("../retro-galaxy/src/backgrounds/buscaminas/fondo.jpg")
+imagen_perder = pygame.image.load("../retro-galaxy/src/backgrounds/buscaminas/kaboom.jpg")
+imagen_salvar = pygame.image.load("../retro-galaxy/src/backgrounds/buscaminas/salvar.png")
+
+# Constantes para los diferentes modos de juego de juego Libre
 MODOS_JUEGO = {
     "Cadete": (10, 10),
     "Soldado": (12, 16),
@@ -114,7 +120,7 @@ class Buscaminas:
         if todas_marcadas_correctamente:
             self.estado = "G"  # Estado de ganar
 
-    def dibujar(self, pantalla, num_derrotas=0):
+    def dibujar(self, screen, num_derrotas=0):
         for fila in range(self.tamano):
             for col in range(self.tamano):
                 casilla = self.tablero[fila][col]
@@ -123,38 +129,38 @@ class Buscaminas:
                 rect = pygame.Rect(x, y, TAMANO_CASILLA, TAMANO_CASILLA)
                 casilla.rect = rect  # Almacenamos el rectángulo para la detección de clics
                 if not casilla.visible:
-                    pygame.draw.rect(pantalla, GRIS, rect)
+                    pygame.draw.rect(screen, GRIS, rect)
                     if casilla.mina_marcada:
-                        pygame.draw.line(pantalla, NEGRO, rect.topleft, rect.bottomright, 3)
-                        pygame.draw.line(pantalla, NEGRO, rect.bottomleft, rect.topright, 3)
+                        pygame.draw.line(screen, NEGRO, rect.topleft, rect.bottomright, 3)
+                        pygame.draw.line(screen, NEGRO, rect.bottomleft, rect.topright, 3)
                 else:
-                    pygame.draw.rect(pantalla, BLANCO, rect)
+                    pygame.draw.rect(screen, BLANCO, rect)
                     if casilla.tiene_mina:
-                        pygame.draw.circle(pantalla, ROJO, rect.center, TAMANO_CASILLA // 4)
+                        pygame.draw.circle(screen, ROJO, rect.center, TAMANO_CASILLA // 4)
                     elif casilla.num_minas_adyacentes > 0:
                         font = pygame.font.SysFont(None, 24)
                         texto = font.render(str(casilla.num_minas_adyacentes), True, NEGRO)
-                        pantalla.blit(texto, rect.topleft)
+                        screen.blit(texto, rect.topleft)
 
         # Dibujar la barra de estado de minas restantes y numero de derrotas
-        pygame.draw.rect(pantalla, GRIS_OSCURO, (0, 0, ANCHO_PANTALLA, 50))
+        pygame.draw.rect(screen, GRIS_OSCURO, (0, 0, ANCHO_PANTALLA, 50))
         font = pygame.font.SysFont(None, 20)  # Reducir el tamaño de la fuente para ajustarse al espacio
         texto = font.render(f"Minas restantes: {self.minas_restantes} | Número de derrotas: {num_derrotas}", True,
-                            BLANCO)
-        pantalla.blit(texto, (10, 10))
+                            VERDE)
+        screen.blit(texto, (10, 10))
         if self.estado == "G":
-            mostrar_mensaje_ganar(pantalla)
+            mostrar_mensaje_ganar(screen)
 
 
-def mostrar_mensaje_ganar(pantalla, modo_juego=None, nivel_actual=None, num_derrotas=None):
+def mostrar_mensaje_ganar(screen, modo_juego=None, nivel_actual=None, num_derrotas=None):
     fuente = pygame.font.SysFont(None, 30)
-    texto = fuente.render("¡Salvaste a la Tierra, eres un héroe!", True, BLANCO)
+    texto = fuente.render("¡Salvaste a la Tierra, eres un héroe!", True, VERDE)
 
     if modo_juego == "arcade" and nivel_actual is not None and num_derrotas is not None:
         if nivel_actual == 4:
             texto = fuente.render(
                 f"Felicidades, haz salvado a la Tierra de todas las minas, y tan sólo te llevó {num_derrotas} intentos",
-                True, BLANCO)
+                True, VERDE)
         rect_continuar = pygame.Rect(ANCHO_PANTALLA // 2 - 100, 300, 200, 40)
         rect_menu_principal = pygame.Rect(ANCHO_PANTALLA // 2 - 100, 360, 200, 40)
     else:
@@ -177,31 +183,31 @@ def mostrar_mensaje_ganar(pantalla, modo_juego=None, nivel_actual=None, num_derr
                         if rect_menu_principal.collidepoint(x, y):
                             return "menu_principal"
 
-        pantalla.fill(GRIS_OSCURO)
-        pantalla.blit(texto, (ANCHO_PANTALLA // 2 - texto.get_width() // 2, 200))
+        screen.blit(imagen_salvar, (0, 0))
+        screen.blit(texto, (ANCHO_PANTALLA // 2 - texto.get_width() // 2, 200))
 
         if modo_juego == "arcade":
-            pygame.draw.rect(pantalla, GRIS, rect_continuar)
-            pygame.draw.rect(pantalla, GRIS, rect_menu_principal)
+            pygame.draw.rect(screen, AZUL, rect_continuar)
+            pygame.draw.rect(screen, AZUL, rect_menu_principal)
 
-            texto_continuar = fuente.render("Continuar", True, BLANCO)
-            texto_menu_principal = fuente.render("Menú principal", True, BLANCO)
+            texto_continuar = fuente.render("Continuar", True, VERDE)
+            texto_menu_principal = fuente.render("Menú principal", True, VERDE)
 
-            pantalla.blit(texto_continuar, (rect_continuar.centerx - texto_continuar.get_width() // 2,
+            screen.blit(texto_continuar, (rect_continuar.centerx - texto_continuar.get_width() // 2,
                                             rect_continuar.centery - texto_continuar.get_height() // 2))
-            pantalla.blit(texto_menu_principal, (rect_menu_principal.centerx - texto_menu_principal.get_width() // 2,
+            screen.blit(texto_menu_principal, (rect_menu_principal.centerx - texto_menu_principal.get_width() // 2,
                                                  rect_menu_principal.centery - texto_menu_principal.get_height() // 2))
         else:
-            pygame.draw.rect(pantalla, GRIS, rect_menu_principal)
-            texto_menu_principal = fuente.render("Menú principal", True, BLANCO)
-            pantalla.blit(texto_menu_principal, (rect_menu_principal.centerx - texto_menu_principal.get_width() // 2,
+            pygame.draw.rect(screen, GRIS, rect_menu_principal)
+            texto_menu_principal = fuente.render("Menú principal", True, VERDE)
+            screen.blit(texto_menu_principal, (rect_menu_principal.centerx - texto_menu_principal.get_width() // 2,
                                                  rect_menu_principal.centery - texto_menu_principal.get_height() // 2))
 
         pygame.display.flip()
-def mostrar_ventana_emergente(pantalla):
+def mostrar_ventana_emergente(screen):
     fuente = pygame.font.SysFont(None, 30)
     texto1 = fuente.render("¡Oh no, explotaste!", True, ROJO)
-    texto2 = fuente.render("¿Quieres intentarlo de nuevo?", True, BLANCO)
+    texto2 = fuente.render("¿Quieres intentarlo de nuevo?", True, VERDE)
 
     rect_opcion1 = pygame.Rect(ANCHO_PANTALLA // 2 - 100, 300, 200, 40)
     rect_opcion2 = pygame.Rect(ANCHO_PANTALLA // 2 - 100, 360, 200, 40)
@@ -219,24 +225,27 @@ def mostrar_ventana_emergente(pantalla):
                     elif rect_opcion2.collidepoint(x, y):
                         return "menu_principal" # Salir
 
-        pantalla.fill(GRIS_OSCURO)
-        pantalla.blit(texto1, (ANCHO_PANTALLA // 2 - texto1.get_width() // 2, 200))
-        pantalla.blit(texto2, (ANCHO_PANTALLA // 2 - texto2.get_width() // 2, 250))
+        screen.blit(imagen_perder, (0, 0))
+        screen.blit(texto1, (ANCHO_PANTALLA // 2 - texto1.get_width() // 2, 200))
+        screen.blit(texto2, (ANCHO_PANTALLA // 2 - texto2.get_width() // 2, 250))
 
-        pygame.draw.rect(pantalla, GRIS, rect_opcion1)
-        pygame.draw.rect(pantalla, GRIS, rect_opcion2)
+        pygame.draw.rect(screen, AZUL, rect_opcion1)
+        pygame.draw.rect(screen, AZUL, rect_opcion2)
 
         font = pygame.font.SysFont(None, 20)
-        texto_opcion1 = font.render("Sí", True, BLANCO)
-        texto_opcion2 = font.render("No", True, BLANCO)
-        pantalla.blit(texto_opcion1, (rect_opcion1.centerx - texto_opcion1.get_width() // 2, rect_opcion1.centery - texto_opcion1.get_height() // 2))
-        pantalla.blit(texto_opcion2, (rect_opcion2.centerx - texto_opcion2.get_width() // 2, rect_opcion2.centery - texto_opcion2.get_height() // 2))
+        texto_opcion1 = font.render("Sí", True, VERDE)
+        texto_opcion2 = font.render("No", True, VERDE)
+        screen.blit(texto_opcion1, (rect_opcion1.centerx - texto_opcion1.get_width() // 2, rect_opcion1.centery - texto_opcion1.get_height() // 2))
+        screen.blit(texto_opcion2, (rect_opcion2.centerx - texto_opcion2.get_width() // 2, rect_opcion2.centery - texto_opcion2.get_height() // 2))
 
         pygame.display.flip()
 
-def menu_principal(pantalla):
+
+
+
+def menu_principal(screen):
     fuente = pygame.font.SysFont(None, 30)  # Reducir el tamaño de la fuente para ajustarse al espacio
-    titulo = fuente.render("Buscaminas Terrícolas", True, BLANCO)
+    titulo = fuente.render("Buscaminas Terrícolas", True, VERDE)
     boton_nuevo = pygame.Rect(ANCHO_PANTALLA // 2 - 100, 200, 200, 40)
     boton_salir = pygame.Rect(ANCHO_PANTALLA // 2 - 100, 300, 200, 40)
 
@@ -254,23 +263,23 @@ def menu_principal(pantalla):
                         pygame.quit()
                         quit()
 
-        pantalla.fill(GRIS_OSCURO)
-        pantalla.blit(titulo, (ANCHO_PANTALLA // 2 - titulo.get_width() // 2, 100))
+        screen.blit(imagen_fondo, (0, 0))
+        screen.blit(titulo, (ANCHO_PANTALLA // 2 - titulo.get_width() // 2, 100))
 
-        pygame.draw.rect(pantalla, GRIS, boton_nuevo)
-        pygame.draw.rect(pantalla, GRIS, boton_salir)
+        pygame.draw.rect(screen, AZUL, boton_nuevo)
+        pygame.draw.rect(screen, AZUL, boton_salir)
 
         font = pygame.font.SysFont(None, 20)  # Reducir el tamaño de la fuente para ajustarse al espacio
-        texto_nuevo = font.render("Nuevo juego", True, BLANCO)
-        texto_salir = font.render("Salir", True, BLANCO)
-        pantalla.blit(texto_nuevo, (boton_nuevo.centerx - texto_nuevo.get_width() // 2, boton_nuevo.centery - texto_nuevo.get_height() // 2))
-        pantalla.blit(texto_salir, (boton_salir.centerx - texto_salir.get_width() // 2, boton_salir.centery - texto_salir.get_height() // 2))
+        texto_nuevo = font.render("Nuevo juego", True, VERDE)
+        texto_salir = font.render("Salir", True, VERDE)
+        screen.blit(texto_nuevo, (boton_nuevo.centerx - texto_nuevo.get_width() // 2, boton_nuevo.centery - texto_nuevo.get_height() // 2))
+        screen.blit(texto_salir, (boton_salir.centerx - texto_salir.get_width() // 2, boton_salir.centery - texto_salir.get_height() // 2))
 
         pygame.display.flip()
 
-def menu_modos_juego(pantalla):
+def menu_modos_juego(screen):
     fuente = pygame.font.SysFont(None, 30)  # Reducir el tamaño de la fuente para ajustarse al espacio
-    titulo = fuente.render("Seleccione el modo de juego", True, BLANCO)
+    titulo = fuente.render("Seleccione el modo de juego", True, VERDE)
     boton_arcade = pygame.Rect(ANCHO_PANTALLA // 2 - 100, 300, 200, 40)
     boton_libre = pygame.Rect(ANCHO_PANTALLA // 2 - 100, 360, 200, 40)
 
@@ -287,23 +296,23 @@ def menu_modos_juego(pantalla):
                     elif boton_libre.collidepoint(x, y):
                         return "libre"
 
-        pantalla.fill(GRIS_OSCURO)
-        pantalla.blit(titulo, (ANCHO_PANTALLA // 2 - titulo.get_width() // 2, 100))
+        screen.blit(imagen_fondo, (0, 0))
+        screen.blit(titulo, (ANCHO_PANTALLA // 2 - titulo.get_width() // 2, 100))
 
-        pygame.draw.rect(pantalla, GRIS, boton_arcade)
-        pygame.draw.rect(pantalla, GRIS, boton_libre)
+        pygame.draw.rect(screen, AZUL, boton_arcade)
+        pygame.draw.rect(screen, AZUL, boton_libre)
 
         font = pygame.font.SysFont(None, 20)  # Reducir el tamaño de la fuente para ajustarse al espacio
-        texto_arcade = font.render("Arcade", True, BLANCO)
-        texto_libre = font.render("Juego Libre", True, BLANCO)
-        pantalla.blit(texto_arcade, (boton_arcade.centerx - texto_arcade.get_width() // 2, boton_arcade.centery - texto_arcade.get_height() // 2))
-        pantalla.blit(texto_libre, (boton_libre.centerx - texto_libre.get_width() // 2, boton_libre.centery - texto_libre.get_height() // 2))
+        texto_arcade = font.render("Arcade", True, VERDE)
+        texto_libre = font.render("Juego Libre", True, VERDE)
+        screen.blit(texto_arcade, (boton_arcade.centerx - texto_arcade.get_width() // 2, boton_arcade.centery - texto_arcade.get_height() // 2))
+        screen.blit(texto_libre, (boton_libre.centerx - texto_libre.get_width() // 2, boton_libre.centery - texto_libre.get_height() // 2))
 
         pygame.display.flip()
 
-def menu_juego_libre(pantalla):
+def menu_juego_libre(screen):
     fuente = pygame.font.SysFont(None, 30)  # Reducir el tamaño de la fuente para ajustarse al espacio
-    titulo = fuente.render("Seleccione el nivel de dificultad", True, BLANCO)
+    titulo = fuente.render("Seleccione el nivel de dificultad", True, VERDE)
     boton_cadete = pygame.Rect(ANCHO_PANTALLA // 2 - 100, 250, 200, 40)
     boton_soldado = pygame.Rect(ANCHO_PANTALLA // 2 - 100, 300, 200, 40)
     boton_capitan = pygame.Rect(ANCHO_PANTALLA // 2 - 100, 350, 200, 40)
@@ -326,39 +335,38 @@ def menu_juego_libre(pantalla):
                     elif boton_coronel.collidepoint(x, y):
                         return "Coronel terrícola"
 
-        pantalla.fill(GRIS_OSCURO)
-        pantalla.blit(titulo, (ANCHO_PANTALLA // 2 - titulo.get_width() // 2, 100))
+        screen.blit(imagen_fondo, (0, 0))
+        screen.blit(titulo, (ANCHO_PANTALLA // 2 - titulo.get_width() // 2, 100))
 
-        pygame.draw.rect(pantalla, GRIS, boton_cadete)
-        pygame.draw.rect(pantalla, GRIS, boton_soldado)
-        pygame.draw.rect(pantalla, GRIS, boton_capitan)
-        pygame.draw.rect(pantalla, GRIS, boton_coronel)
+        pygame.draw.rect(screen, AZUL, boton_cadete)
+        pygame.draw.rect(screen, AZUL, boton_soldado)
+        pygame.draw.rect(screen, AZUL, boton_capitan)
+        pygame.draw.rect(screen, AZUL, boton_coronel)
 
         font = pygame.font.SysFont(None, 20)  # Reducir el tamaño de la fuente para ajustarse al espacio
-        texto_cadete = font.render("Cadete", True, BLANCO)
-        texto_soldado = font.render("Soldado", True, BLANCO)
-        texto_capitan = font.render("Capitan", True, BLANCO)
-        texto_coronel = font.render("Coronel terrícola", True, BLANCO)
+        texto_cadete = font.render("Cadete", True, VERDE)
+        texto_soldado = font.render("Soldado", True, VERDE)
+        texto_capitan = font.render("Capitan", True, VERDE)
+        texto_coronel = font.render("Coronel terrícola", True, VERDE)
 
-        pantalla.blit(texto_cadete, (boton_cadete.centerx - texto_cadete.get_width() // 2, boton_cadete.centery - texto_cadete.get_height() // 2))
-        pantalla.blit(texto_soldado, (boton_soldado.centerx - texto_soldado.get_width() // 2, boton_soldado.centery - texto_soldado.get_height() // 2))
-        pantalla.blit(texto_capitan, (boton_capitan.centerx - texto_capitan.get_width() // 2, boton_capitan.centery - texto_capitan.get_height() // 2))
-        pantalla.blit(texto_coronel, (boton_coronel.centerx - texto_coronel.get_width() // 2, boton_coronel.centery - texto_coronel.get_height() // 2))
+        screen.blit(texto_cadete, (boton_cadete.centerx - texto_cadete.get_width() // 2, boton_cadete.centery - texto_cadete.get_height() // 2))
+        screen.blit(texto_soldado, (boton_soldado.centerx - texto_soldado.get_width() // 2, boton_soldado.centery - texto_soldado.get_height() // 2))
+        screen.blit(texto_capitan, (boton_capitan.centerx - texto_capitan.get_width() // 2, boton_capitan.centery - texto_capitan.get_height() // 2))
+        screen.blit(texto_coronel, (boton_coronel.centerx - texto_coronel.get_width() // 2, boton_coronel.centery - texto_coronel.get_height() // 2))
 
         pygame.display.flip()
 
 
 def main():
-    pantalla = pygame.display.set_mode((ANCHO_PANTALLA, ALTO_PANTALLA))
-    pygame.display.set_caption("Buscaminas")
+    global screen
 
     while True:
         # Mostrar menú principal
-        opcion_menu = menu_principal(pantalla)
+        opcion_menu = menu_principal(screen)
 
         if opcion_menu == "nuevo":
             # Mostrar menú de modos de juego
-            modo_juego = menu_modos_juego(pantalla)
+            modo_juego = menu_modos_juego(screen)
 
             if modo_juego == "arcade":
                 nivel_actual = 1
@@ -386,12 +394,12 @@ def main():
                                     elif evento.button == 3:
                                         juego.alternar_marcado_mina(fila, col)
 
-                        pantalla.fill(GRIS_OSCURO)
-                        juego.dibujar(pantalla, num_derrotas)
+                        screen.blit(imagen_fondo, (0, 0))
+                        juego.dibujar(screen, num_derrotas)
                         pygame.display.flip()
 
                         if juego.estado == "P":
-                            reintentar = mostrar_ventana_emergente(pantalla)
+                            reintentar = mostrar_ventana_emergente(screen)
                             num_derrotas += 1
                             if reintentar == True:
                                 juego = Buscaminas(tamano, num_minas)
@@ -400,7 +408,7 @@ def main():
                                 nivel_actual = max_niveles + 1  # Esto fuerza la salida del bucle arcade
                                 break
                         elif juego.estado == "G":
-                            resultado = mostrar_mensaje_ganar(pantalla, modo_juego, nivel_actual, num_derrotas)
+                            resultado = mostrar_mensaje_ganar(screen, modo_juego, nivel_actual, num_derrotas)
                             if resultado == "siguiente_nivel":
                                 nivel_actual += 1
                                 jugando = False
@@ -409,7 +417,7 @@ def main():
                                 break
 
             elif modo_juego == "libre":
-                dificultad = menu_juego_libre(pantalla)
+                dificultad = menu_juego_libre(screen)
                 tamano, num_minas = MODOS_JUEGO[dificultad]
                 juego = Buscaminas(tamano, num_minas)
                 num_derrotas = 0
@@ -431,12 +439,12 @@ def main():
                                 elif evento.button == 3:
                                     juego.alternar_marcado_mina(fila, col)
 
-                    pantalla.fill(GRIS_OSCURO)
-                    juego.dibujar(pantalla, num_derrotas)
+                    screen.blit(imagen_fondo, (0, 0))
+                    juego.dibujar(screen, num_derrotas)
                     pygame.display.flip()
 
                     if juego.estado == "P":
-                        reintentar = mostrar_ventana_emergente(pantalla)
+                        reintentar = mostrar_ventana_emergente(screen)
                         num_derrotas += 1
                         if reintentar == True:
                             juego = Buscaminas(tamano, num_minas)
@@ -444,7 +452,7 @@ def main():
                             jugando = False
                             break
                     elif juego.estado == "G":
-                        resultado = mostrar_mensaje_ganar(pantalla)
+                        resultado = mostrar_mensaje_ganar(screen)
                         if resultado == "menu_principal":
                             jugando = False
                             break
@@ -453,11 +461,4 @@ def main():
             pygame.quit()
             quit()
 
-            # Mostrar mensaje de felicitación
-            pantalla.fill(NEGRO)
-            mostrar_mensaje_ganar(pantalla, modo_juego, nivel_actual, num_derrotas)
-            pygame.display.flip()
-            pygame.time.delay(3000)
 
-if __name__ == "__main__":
-    main()

@@ -4,7 +4,6 @@ import random
 from interface import Button_game
 
 pygame.init()
-name = pygame.display.set_caption("Galactic Travel")
 clock = pygame.time.Clock()
 bg = pygame.image.load('../retro-galaxy/src/backgrounds/travel-bg.jpeg')
 
@@ -34,10 +33,10 @@ pass_asteroid = False
 x_sprites = [ "../retro-galaxy/src/buttons/x-btn.png", "../retro-galaxy/src/buttons/x-btn-press.png"]
 z_sprites = [ "../retro-galaxy/src/buttons/z-btn.png", "../retro-galaxy/src/buttons/z-btn-press.png"]
 
-button_x = Button_game(x_sprites[0]," ", 250,500)
-button_z = Button_game(z_sprites[0]," ", 650,500)
-button_x_pressed = Button_game(x_sprites[1]," ", 250,500)
-button_z_pressed = Button_game(z_sprites[1]," ", 650,500)
+button_x = Button_game(x_sprites[0]," ", 650,500)
+button_z = Button_game(z_sprites[0]," ", 250,500)
+button_x_pressed = Button_game(x_sprites[1]," ", 650,500)
+button_z_pressed = Button_game(z_sprites[1]," ", 250,500)
 
 class Ovni(pygame.sprite.Sprite):
     #Constructor function for the class
@@ -183,8 +182,8 @@ jugador = Ovni((340,200),'../retro-galaxy/src/sprites/Galactic-Travel/ufo.png')
 asteroid_group = pygame.sprite.Group()
 start_text = Message('Presione Z para comenzar', 540, 150, '../retro-galaxy/src/fonts/font2.ttf', 40, 'white')
 
-label1 = Message("Saltar", 715,480,'../retro-galaxy/src/fonts/font2.ttf', 30, "white" )
-label2 = Message("Bomba", 315,480,'../retro-galaxy/src/fonts/font2.ttf', 30, "white" )
+label1 = Message("Saltar", 315,480,'../retro-galaxy/src/fonts/font2.ttf', 30, "white" )
+label2 = Message("Bomba", 715,480,'../retro-galaxy/src/fonts/font2.ttf', 30, "white" )
 
 
 restart = Message("¡Haz  perdido!", 540, 150,'../retro-galaxy/src/fonts/font1.otf', 40, "red")
