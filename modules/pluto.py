@@ -40,8 +40,5 @@ class Pluto:
 
         elif self.snake.gstate == False:
             self.snake.draw()
-            ps.finalizar = False
-            ps.iniciar = True
-
 pluton = Pluto()
 

@@ -150,7 +150,7 @@ def main_menu():
         screen.fill(background_color)
         show_text(screen, "Space Invaders", 300, 200)
         show_text(screen, "Presiona 'J' para Jugar", 270, 300)
-        show_text(screen, "Presiona 'Q' para Salir", 270, 350)
+        show_text(screen, "Presiona 'ESC' para Salir", 270, 350)
         pygame.display.flip()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
