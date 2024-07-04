@@ -1,7 +1,9 @@
+import global_variables as gv
 from global_variables import *
 from interface import Interface
 from Mars_Breaker import *
 import Mars_Breaker as M
+pygame.init()
 
 class Mars:
     def __init__(self):
@@ -31,11 +33,13 @@ class Mars:
         if self.Breaker.gstate == True:
             M.juego()
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_ESCAPE] == True and M.finalizar == True:
+            if keys[pygame.K_ESCAPE] == True or M.finalizar == True:
                  self.Breaker.gstate = False
 
         elif self.Breaker.gstate == False:
             self.Breaker.draw()
+        
+
             
     
 mars = Mars()
