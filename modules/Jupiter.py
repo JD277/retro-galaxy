@@ -32,7 +32,7 @@ class Jupiter:
 
     def draw(self):
         if self.spaceinvader.gstate == True:
-            spaceinvader.main_game()
+            spaceinvader.main()
             keys = pygame.key.get_pressed()
             if keys[pygame.K_ESCAPE] == True:
                 self.spaceinvader.gstate = False

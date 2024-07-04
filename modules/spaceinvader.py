@@ -2,11 +2,12 @@ import global_variables as gv
 from global_variables import *
 import sys
 import random
-import Jupiter as J
 
 # Colores
 background_color = (0, 0, 0)  # Negro
 text_color = (255, 255, 255)  # Blanco
+screen_width = 1080
+screen_height = 720
 
 # Fuente
 font = pygame.font.Font(None, 36)
@@ -100,6 +101,7 @@ def show_text(screen, text, x, y):
 
 # Función para mostrar Game Over y reiniciar
 def game_over():
+    global running
     screen.fill(background_color)
     show_text(screen, "Game Over", screen_width // 2 - 70, screen_height // 2)
     show_text(screen, "Presiona 'R' para Reiniciar", screen_width // 2 - 150, screen_height // 2 + 50)
@@ -114,8 +116,10 @@ def game_over():
                 if event.key == pygame.K_r:
                     waiting = False
                     main_game()
-            if event.type == pygame.K_ESCAPE:
-                J.jupiter.spaceinvader.gstate == False
+                if event.key == pygame.K_ESCAPE:
+                    waiting = False 
+                    running = False
+            
                     
 # Función para mostrar la pantalla de victoria y preguntar por mayor dificultad
 def victory_screen():
@@ -155,11 +159,13 @@ def main_menu():
                 if event.key == pygame.K_j:
                     menu = False
                 if event.key == pygame.K_q:
-                    pygame.quit()
-                    sys.exit()
+                    running == False
+                    menu = False
+                
 
 # Juego principal
 def main_game():
+    global running
     player = Player('../retro-galaxy/src/sprites/Space_invaders/jugador.png', screen_width // 2, screen_height - 70)
     invader_images = [
         '../retro-galaxy/src/sprites/Space_invaders/invasor1.png',
@@ -254,7 +260,7 @@ def main_game():
     pygame.quit()
     sys.exit()
 
-if __name__ == "__main__":
+def main():
     main_menu()
     main_game()
 
