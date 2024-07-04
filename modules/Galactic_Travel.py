@@ -191,7 +191,8 @@ restart3 = Message("2.  Presiona  SPACE  para  volver a  jugar", 540, 270,'../re
 def galactic_travel():
     global running, start, dt, frequency, last_asteroid, score, bombs, lifes, inv_frames, pass_asteroid, button_x, button_z,game_over
 
-    screen.blit(bg,(0,0))
+    screen.fill((0,0,0))
+    screen.blit(bg,(0,-290))
     time = pygame.time.get_ticks()
     button_x.draw()
     button_z.draw()
