@@ -10,7 +10,6 @@ import mars
 import pluto
 import Jupiter
 
-pygame.init()
 mainClock = pygame.time.Clock()
 from pygame.locals import *
 
@@ -37,8 +36,7 @@ click = False
 
 
 def main_menu():
-    global click, hover, text_box
-    while True:
+        global click, hover, text_box
 
         screen.blit(fondo, (0, 0))
 

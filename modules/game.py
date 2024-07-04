@@ -3,8 +3,6 @@ import threading
 from Manzana import *
 import time
 
-pygame.init()
-
 display = pygame.display.set_mode((800,600))
 fuente = pygame.font.Font(None, 30)
 fuenteOver = pygame.font.Font(None, 50)

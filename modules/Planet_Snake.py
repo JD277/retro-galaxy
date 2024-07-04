@@ -14,7 +14,6 @@ menu_sound = pygame.mixer.Sound("../retro-galaxy/src/sounds/Planet_Snake/menu.mp
 start_sound = pygame.mixer.Sound("../retro-galaxy/src/sounds/Planet_Snake/start.mp3")
 
 
-pygame.init()
 #Falta redimensionar
 
 fuente = pygame.font.Font(None, 30)

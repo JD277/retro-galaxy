@@ -1,8 +1,8 @@
 from global_variables import *
 import global_variables as gv
-
+import random
+import earth 
 # Inicialización de Pygame
-pygame.init()
 
 # Definición de colores
 BLANCO = (255, 255, 255)
@@ -248,7 +248,6 @@ def menu_principal(screen):
     titulo = fuente.render("Buscaminas Terrícolas", True, VERDE)
     boton_nuevo = pygame.Rect(ANCHO_PANTALLA // 2 - 100, 200, 200, 40)
     boton_salir = pygame.Rect(ANCHO_PANTALLA // 2 - 100, 300, 200, 40)
-
     while True:
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
@@ -260,8 +259,8 @@ def menu_principal(screen):
                     if boton_nuevo.collidepoint(x, y):
                         return "nuevo"
                     elif boton_salir.collidepoint(x, y):
-                        pygame.quit()
-                        quit()
+                        return "salir"
+                        
 
         screen.blit(imagen_fondo, (0, 0))
         screen.blit(titulo, (ANCHO_PANTALLA // 2 - titulo.get_width() // 2, 100))
@@ -358,9 +357,8 @@ def menu_juego_libre(screen):
 
 
 def main():
-    global screen
+        global screen
 
-    while True:
         # Mostrar menú principal
         opcion_menu = menu_principal(screen)
 
@@ -458,7 +456,6 @@ def main():
                             break
 
         elif opcion_menu == "salir":
-            pygame.quit()
-            quit()
-
+            earth.earth.buscaminas.gstate = False
+            print(earth.earth.buscaminas.gstate)
 

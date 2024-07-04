@@ -39,7 +39,6 @@ class Earth:
                  self.buscaminas.gstate = False
 
         elif self.buscaminas.gstate == False:
-
             self.buscaminas.draw()
 
 earth = Earth()

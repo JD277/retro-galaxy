@@ -1,17 +1,7 @@
-import pygame
+import global_variables as gv
+from global_variables import *
 import sys
 import random
-
-# Inicializar Pygame
-pygame.init()
-
-# Definir dimensiones de la pantalla
-screen_width = 1080
-screen_height = 720
-screen = pygame.display.set_mode((screen_width, screen_height))
-
-# Título del juego
-pygame.display.set_caption("Space Invader")
 
 # Colores
 background_color = (0, 0, 0)  # Negro

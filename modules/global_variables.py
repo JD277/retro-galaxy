@@ -1,9 +1,8 @@
 import pygame 
 screen = pygame.display.set_mode((1080, 720))
 pygame.display.set_caption("Retro Galaxy")
-pygame.init()
 running = True
-
+pygame.init()
 class Message:
     def __init__(self, text, x, y, font, size, color,pos):
         self.text = text
