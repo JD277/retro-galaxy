@@ -9,11 +9,8 @@ import Mercury
 import mars
 import pluto
 import Jupiter
-<<<<<<< HEAD
 import venu
-=======
 pygame.init()
->>>>>>> 95b573e88122cb78a26afe7a8db5f4d9d48ee5ac
 
 mainClock = pygame.time.Clock()
 from pygame.locals import *
