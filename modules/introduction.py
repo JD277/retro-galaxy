@@ -28,8 +28,6 @@ class intro:
         self.click = False
         self.size = size
 
-
-
     def CREATE_TEXT (self, size, pos_x, pos_y, text):
         # text variables
         text_content = text
