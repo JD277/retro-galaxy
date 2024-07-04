@@ -10,14 +10,8 @@ import mars
 import pluto
 import Jupiter
 import venu
-<<<<<<< HEAD
 import Intefazsaturno
-
 pygame.init()
-
-=======
-pygame.init()
->>>>>>> 53226810fb674288d792a61f776c0b0738b24a62
 
 mainClock = pygame.time.Clock()
 from pygame.locals import *

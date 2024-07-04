@@ -76,7 +76,8 @@ while running:
     if condition == True and end == False:
        counter += 1.5   
     
-    if counter >= 598:
+    if counter >= 598:    
+
         end = True
         menu_planetas.main_menu()
     pygame.display.flip()

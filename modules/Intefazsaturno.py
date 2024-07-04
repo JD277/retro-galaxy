@@ -29,7 +29,7 @@ class Saturno:
         if self.cars.gstate == True:
             car_race.game.run()
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_ESCAPE] == True and car_race.fin == True:
+            if keys[pygame.K_ESCAPE] == True and self.cars.gstate == True:
                 self.cars.gstate = False
 
         elif self.cars.gstate == False:

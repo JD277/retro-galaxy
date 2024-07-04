@@ -1,7 +1,5 @@
 import pygame
 import random
-import sys
-import os
 import global_variables
 import Intefazsaturno
 
@@ -24,7 +22,7 @@ class game_principal:
   def __init__(self):
     pygame.init()
     self.pantalla = pygame.display.set_mode((1080, 720))
-    self.fps = 25
+    self.fps = 20
     self.reloj = pygame.time.Clock()
     self.carros = self.cargar_carros()
     self.carro = random.choice(self.carros)
@@ -84,14 +82,14 @@ class game_principal:
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         return False
-      elif event.type == pygame.KEYDOWN:
-        if event.key == pygame.K_LEFT and self.cont> 0:
+    key = pygame.key.get_pressed()
+    if key[pygame.K_LEFT] and self.cont> 0:
           self.cont -= 1
-        elif event.key == pygame.K_RIGHT and self.cont<len(self.Carriles) - 1:
+    elif key[pygame.K_RIGHT] and self.cont<len(self.Carriles) - 1:
           self.cont += 1
-        elif event.key == pygame.K_ESCAPE and self.fin == True:
-              self.fin = False
-              Intefazsaturno.saturno.cars.gstate = False
+    elif key[pygame.K_ESCAPE] and self.fin == True:
+        self.fin = False
+        Intefazsaturno.saturno.cars.gstate = False
 
   def update_carro(self):
     self.carro_rect.centerx = self.Carriles[self.cont]
@@ -157,23 +155,24 @@ class game_principal:
 
   def run(self):
     
-    while self.running and self.fin == False:
       
-      global_variables.screen.fill((0,0,0))
-      self.handle_events()
-      self.update_carro()
-      self.dibujar_pista()
-      self.dibujar_carro()
-      self.update_obstaculos()
-      self.detectar_colision()
-      self.obstaculos.update()
-      self.obstaculos.draw(self.pantalla)
-      font = pygame.font.Font(None, 36)
-      text = font.render(f"Score: {self.puntuacion}", 1, (255, 255, 255))
-      pygame.draw.rect(self.pantalla, self.rojo, self.tam)
-      self.pantalla.blit(text, (12, 10))
-      pygame.display.flip()
-      self.reloj.tick(self.fps)
+        global_variables.screen.fill((0,0,0))
+        self.handle_events()
+        self.update_carro()
+        self.dibujar_pista()
+        self.dibujar_carro()
+        self.update_obstaculos()
+        self.detectar_colision()
+        if self.fin == False:
+      
+          self.obstaculos.update()
+          self.obstaculos.draw(self.pantalla)
+          font = pygame.font.Font(None, 36)
+          text = font.render(f"Score: {self.puntuacion}", 1, (255, 255, 255))
+          pygame.draw.rect(self.pantalla, self.rojo, self.tam)
+          self.pantalla.blit(text, (12, 10))
+        pygame.display.flip()
+        self.reloj.tick(self.fps)
 
 game = game_principal()
 
