@@ -69,7 +69,7 @@ def main():
     sound_fondo.set_volume(0.60)
     sound_gameover.set_volume(0.15)
     sound_fondo.play(5)
-
+    
     while run:
         pygame.display.flip()    
        
@@ -118,7 +118,8 @@ def main():
                        
         if change == "DOWN":
             snake_pos[1] += 10
-            
+
+          
            
         snake_cuerp.insert(0, list(snake_pos))
          
@@ -137,7 +138,7 @@ def main():
         
         r1 = display.blit(color,(snake_pos[0],snake_pos[1],t,t))
                   
-                        
+        
         if  snake_pos in comida_pos[0:] or cantidadM == 0 or pygame.Rect.colliderect(r1,r2) :
             s=True
                          
@@ -175,6 +176,8 @@ def main():
            color = rojo
         
         display.blit(fondo,(0,0))
+        pygame.draw.line(display, 'white',(0,630),(820,630),5) #Lineas del area de juego
+        pygame.draw.line(display, 'white',(820,630),(820,0),5)  
         
         for pos in snake_cuerp:
          
@@ -224,6 +227,8 @@ def main():
             sound_fondo.stop()
             
             pygame.display.flip()
+    
+    pygame.display.flip()
             
          
         
