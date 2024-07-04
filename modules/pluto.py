@@ -35,11 +35,13 @@ class Pluto:
         if self.snake.gstate == True:
             ps.game()
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_ESCAPE] == True and ps.finalizar == True : 
-                 self.ps.gstate = False
+            if keys[pygame.K_ESCAPE] == True or ps.finalizar == True : 
+                 self.snake.gstate = False
 
         elif self.snake.gstate == False:
             self.snake.draw()
+            ps.finalizar = False
+            ps.iniciar = True
 
 pluton = Pluto()
 
